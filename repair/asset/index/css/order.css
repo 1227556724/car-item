@@ -1,0 +1,196 @@
+.cn-content {
+    width: 100%;
+    height: auto;
+    margin-bottom: 40px;
+}
+
+/* 顶部内容 */
+.bit-wrap {
+    width: 1024px;
+    margin: auto;
+}
+
+.bit-wrap .img {
+    width: 100%;
+    height: 375px;
+    margin-top: 20px;
+}
+
+.bit-wrap .img img {
+    width: 100%;
+    height: 100%;
+}
+
+.bit-wrap .about-tt {
+    width: 100%;
+    height: 105px;
+    padding-top: 20px;
+    position: relative;
+}
+
+.bit-wrap .about-tt .line {
+    display: block;
+    width: 428px;
+    height: 1px;
+    position: absolute;
+    bottom: 0;
+    top: 18px;
+    margin: auto;
+    background-color: #D6D6D6;
+}
+
+.bit-wrap .about-tt .left {
+    left: 0;
+}
+
+.bit-wrap .about-tt .right {
+    right: 0;
+}
+
+.bit-wrap .about-tt .about-title {
+    margin: 20px 0;
+    height: 65px;
+}
+
+.bit-wrap .about-tt .hd-title {
+    margin: auto;
+    width: 128px;
+    height: 65px;
+}
+
+.bit-wrap .about-tt .hd-title .tp-title {
+    font-size: 32px;
+    color: #333;
+
+}
+
+.bit-wrap .about-tt .hd-title .hd-subtitle {
+    font-size: 14px;
+    color: #a5a5a5;
+    text-align: center;
+}
+
+/* 内容 */
+/* 预约内容 */
+.big-content {
+    width: 1024px;
+    height: 388px;
+    padding-top: 20px;
+    margin: 0 auto 40px;
+}
+
+.big-content .bg-select {
+    width: 482px;
+    height: 388px;
+    padding: 0 5px;
+    margin: auto;
+}
+
+.big-content .bg-select .st-card {
+    padding-bottom: 10px;
+    width: 482px;
+    overflow: hidden;
+}
+
+.big-content .bg-select .st-card .text {
+    font-size: 14px;
+    color: #555555;
+    /* padding-bottom: 10px;
+    box-sizing: border-box; */
+    float: left;
+}
+
+.big-content .bg-select .st-card .text-box {
+    margin-left: 100px;
+    padding-left: 10px;
+    position: relative;
+}
+
+.big-content .bg-select .st-card .text-box .one {
+    margin-bottom: 3px;
+    height: 20px;
+    border: solid 1px #CCC;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+    color: #555555;
+    border-radius: 4px;
+    outline: none;
+}
+
+.big-content .bg-select .st-card .text-box .two {
+    width: 64px;
+}
+
+.big-content .bg-select .st-card .text-box .three {
+    width: 291px;
+}
+
+.big-content .bg-select .st-card .text-box .push {
+    width: 16px;
+    height: 16px;
+}
+
+.big-content .bg-select .st-card .text-box .sex {
+    font-size: 14px;
+    color: #555555;
+    vertical-align: 3px;
+    margin: 0 6px;
+}
+
+.big-content .bg-select .st-card .text-box textarea {
+    margin-bottom: 3px;
+    height: 57px;
+    width: 291px;
+    border: solid 1px #CCC;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+    color: #555555;
+    border-radius: 4px;
+    outline: none;
+}
+
+.big-content .bg-select .st-card .text-box img {
+    width: 115px;
+    height: 40px;
+    transition: 0.3s linear;
+    cursor: pointer;
+}
+
+.big-content .bg-select .st-card .text-box .icon-xunhuan {
+    font-size: 24px;
+    position: absolute;
+    top: 6px;
+    left: 54px;
+    opacity: 0;
+    transition: 0.3s linear;
+}
+
+.big-content .bg-select .st-card .text-box2 {
+    width: 115px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.big-content .bg-select .st-card label {
+    color: rgb(41, 41, 41);
+    width: 100px;
+    font-size: 14px;
+    line-height: 14px;
+    float: left;
+    padding-bottom: 10px;
+    cursor: default;
+}
+
+.big-content .bg-select button {
+    width: 98px;
+    height: 28px;
+    background: #333;
+    font-size: 14px;
+    text-align: center;
+    color: #fff;
+    border: 0;
+    cursor: pointer;
+}
+
+.big-content .bg-select button:hover {
+    background: #ff6600;
+    border: 1px solid #333;
+}

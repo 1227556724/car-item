@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图腾汽车维修管理系统</title>
+
+    <link rel="stylesheet" href="__ADMIN_CSS__/layui.css">
+</head>
+<style>
+
+    .box{
+        position: absolute;
+        top:0;
+        bottom:0;
+        left:0;
+        right:0;
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        background:url("/pastry/public/static/admin/img/carbj.png") no-repeat center/100%;
+    }
+    h1{
+        line-height:3;
+        text-align: center;
+        margin-top:20px;
+        color: rgba(255,255,255,255);
+
+    }
+
+    form{
+        width:400px;
+        height:320px;
+        background:rgba(255,255,255,0.6);
+        box-shadow:0 1px 20px  rgba(0,0,0,0.2 );
+        border-radius:20px;
+        overflow: hidden;
+        padding:0 20px;
+        box-sizing:border-box;
+    }
+    .name{
+        margin-top: 36px;
+    }
+    .interface{
+        width:400px;
+        height:400px;
+        position: absolute;
+        top:0;
+        bottom:0;
+        left:0;
+        right: 0;
+        margin: auto;
+    }
+    .layui-form-item .btn{
+        width:128px;
+    }
+
+    .layui-input-block{
+        margin-left:0;
+        text-align:center;
+    }
+    .imgs{
+        display: block;
+        height: 31px;
+        margin-left: 111px;
+        margin-bottom: 22px;
+        width: 126px;
+    }
+    .layui-form-label{
+        color:#fff
+    }
+</style>
+<body>
+<div class="box">
+    <div class="interface">
+        <h1>图腾汽车维修后台管理</h1>
+        <form action="" class="layui-form  ">
+            <div class="layui-form-item name">
+                <label class="layui-form-label">用户名</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="username" required  lay-verify="required|username" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">密码</label>
+                <div class="layui-input-inline">
+                    <input type="password" name="password" required lay-verify="required|pass" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">验证码</label>
+                <div class="layui-input-inline btn">
+                    <input type="text" name="captcha" id="layui-input" required lay-verify="required" placeholder="请输入验证码" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <img src="{:captcha_src()}" alt="" class="imgs" onclick="javascript:this.src='{:captcha_src()}?rand='+Math.random()">
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script src="__ADMIN_JS__/layui.js"></script>
+<script>
+    layui.use(['form','layer'],function(){
+        var {form,$,layer}=layui;
+//        发请求
+        form.on('submit(formDemo)',function(data){
+            var qs=data.field;
+            $.ajax({
+                url:'/pastry/public/admin/login/check',
+                type:'post',
+                dataType:'json',
+                data:qs,
+                success:function(res){
+                    if(res.code===200){
+                        layer.msg(res.msg,{icon:1,time:500})
+                        location.href='/pastry/public/admin/main/index';
+                    }else{
+                        layer.msg(res.msg,{icon:2,time:500})
+                    }
+                }
+            })
+             return false;
+        })
+//        表单验证
+        layui.code
+        form.verify({
+            username: function(value, item){ //value：表单的值、item：表单的DOM对象
+                if(!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)){
+                    return '用户名不能有特殊字符';
+                }
+                if(/(^\_)|(\__)|(\_+$)/.test(value)){
+                    return '用户名首尾不能出现下划线\'_\'';
+                }
+                if(/^\d+\d+\d$/.test(value)){
+                    return '用户名不能全为数字';
+                }
+            }
+
+            //我们既支持上述函数式的方式，也支持下述数组的形式
+            //数组的两个值分别代表：[正则匹配、匹配不符时的提示文字]
+            ,pass: [
+                /^[\S]{6,12}$/
+                ,'密码必须6到12位，且不能出现空格'
+            ]
+        });
+    })
+
+</script>
+</body>
+</html>

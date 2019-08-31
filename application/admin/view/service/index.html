@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="__ADMIN_CSS__/layui.css">
+</head>
+<style>
+    .layui-table-cell {
+        text-align: center;
+    }
+    #editForm{
+        display: none;
+    }
+    #demo2{
+        width: 300px;
+        margin-left: 50px;
+    }
+    img{
+        width:100%;
+        height:100%;
+    }
+    .text{
+        display: block;
+        margin: 20px 38px;
+        text-align: center;
+    }
+    .layui-upload{
+        margin-top:20px;
+    }
+    .btn{
+        width: 296px;
+        margin-left: 52px;
+    }
+    .btn-two{
+        width: 296px;
+    }
+    .layui-input-block{
+        margin-left: 53px;
+    }
+    form{
+        margin:20px 4px;
+    }
+    tbody tr{
+        height:90px;
+    }
+    .layui-table-cell {
+        height: 60px;
+        line-height: 60px;
+    }
+    .form-one{
+        position: absolute;
+        top:10px;
+        z-index: 9999;
+    }
+</style>
+<body>
+
+<div style="padding: 15px;">
+    <form action="" class="layui-form form-one">
+        <div class="layui-form-item layui-form-pane">
+            <div class="layui-inline">
+                <label class="layui-form-label">排序</label>
+                <div class="layui-input-inline" style="width: 100px;">
+                    <input type="text" name="sort" placeholder="搜索序号" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemos">搜索</button>
+        </div>
+    </form>
+    <table id="demo" lay-filter="test" lay-data="{id: 'idTest'}"></table>
+
+</div>
+<script type="text/html" id="titleTpl">
+
+    <button type="button" class="layui-btn layui-btn-warm  layui-btn-sm" onclick="edit({{ d.id }},this)">编辑</button>
+    <button type="button" class="layui-btn layui-btn-danger  layui-btn-sm" onclick="del({{ d.id }},this)">删除</button>
+
+</script>
+<script src="__ADMIN_JS__/layui.js"></script>
+<script>
+    var $,table,form,index2,layer;
+    layui.use(['element','table','layer','form','upload','layedit'],function(){
+        var {element,layer,layedit}=layui;
+        layer=layui.layer;
+        $=layui.jquery;
+        table=layui.table;
+        form=layui.form;
+        upload=layui.upload;
+        // 表格渲染
+        var tableIns= table.render({
+            elem:'#demo',
+            url:'/pastry/public/admin/service/find',
+            page:true,
+            limit:5,
+            limits:[5,10,15],
+            toolbar:true,
+            cols:[[
+                {field:"id",title:"ID",width:100,sort:true},
+                {field:"serviceItem",title:"服务项目"},
+                {field:"img",title:"人员照片",templet:function(d){
+                        return `<img src="${d.img}" />`
+                    }},
+                {field:"content",title:"项目介绍"},
+                {title:"操作",templet:'#titleTpl'},
+            ]]
+        })
+        var indexsEdit=layedit.build('Editdemo',{
+            tool:['image','strong','italic','underline','del','|','left','center','right','link','unlink','face'],
+            height:100,
+            uploadImage:{
+                url:'/pastry/public/admin/upload/files',
+                type:'post'
+            }
+        })
+        // 上传图片
+        upload.render({
+            elem:'#test2',
+            url:'/pastry/public/admin/upload/index',
+            accept:'',
+            acceptMime:'image/*',
+            size:500,
+            done:function(res){
+                if(res.code==200){
+                    layer.msg(res.msg,{icon:1,time:600});
+                    $('#img').attr('src',res.src);
+                    $('#himg').attr('value',res.src);
+                }
+            }
+        });
+        // 修改表格
+        form.on('submit(formDemo)',function (data) {
+            var qs= data.field;
+            console.log(qs);
+            $.ajax({
+                url:'/pastry/public/admin/service/update',
+                data:qs,
+                type:'post',
+                dataType:'json',
+                success:function(res){
+                    var {code,msg}=res;
+                    if(code===200){
+                        layer.close(index2);
+                        layer.msg(msg,{icon:1,time:600});
+                        table.reload('demo',{
+                            url:"/pastry/public/admin/service/find"
+                        })
+                    }else{
+                        layer.msg(msg,{icon:2,time:600});
+                    }
+                }
+            })
+            return false
+        })
+        // 搜索表格进行重载
+        form.on('submit(formDemos)',function(data){
+            var qs=data.field;
+            tableIns.reload({
+                where: qs
+                ,page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            });
+            return false
+        })
+    })
+
+    // 删除
+    function del(id,obj){
+        console.log(id);
+        layer.confirm('您确定要删除吗？', {
+            title:"删除服务项目",
+            skin: 'layui-layer-molv',
+            btn: ['确认','取消'] //按钮,
+        },function(){
+            $.post('/pastry/public/admin/service/del',{id:id},function (res) {
+                var {code,msg}=res;
+                if(code===200){
+                    $(obj).parents('tr').remove();
+                    layer.msg(msg,{icon:1,time:500})
+                    table.reload('demo',{
+                        url:'/pastry/public/admin/service/find',
+                    })
+                }else{
+                    layer.msg(msg,{icon:1,time:500})
+                }
+            })
+        },function(){
+            layer.close()
+        })
+    }
+    // 修改(页面渲染)
+
+    function edit(id,obj){
+        index2=layer.open(
+            {
+                title: "编辑团队信息",
+                skin: 'layui-layer-molv',
+                type: 1,
+                area: ['420px', ''], //宽高
+                content: $('#editForm'),
+            });
+        $.post('/pastry/public/admin/service/edit',{id:id},function(res){
+            var data=res.data;
+            if(res.code===200){
+                $("#img").attr('src',data.img);
+                $("#editForm [name='serviceItem']").val(data.serviceItem);
+                $("#editForm [name='img']").val(data.img);
+                $("#editForm [name='id']").val(data.id);
+                $("#editForm [name='content']").html(data.content)
+            }else {
+                layer.msg(res.msg,{icon:2,time:600})
+            }
+        })
+    }
+
+</script>
+    <form action="" class="layui-form layui-form-pane " id="editForm">
+    <div class="layui-form-item">
+        <label class="layui-form-label">服务项目</label>
+        <div class="layui-input-inline">
+            <input type="text" name="serviceItem" required lay-verify="required" placeholder="请输入项目名称" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item name">
+        <div class="layui-upload">
+            <input type="hidden" name="id" >
+            <input type="hidden" name="img" value="">
+            <button type="button" name="img" class="layui-btn" id="test2">图片上传</button>
+            <span class="text">上传图片的最佳比例为1：2，图片大小为800*1396.</span>
+            <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+                <div class="layui-upload-list" id="demo2">
+                    <img src="" alt="" id="img" style="width: 300px;">
+                </div>
+            </blockquote>
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">产品详情</label>
+        <div class="layui-input-block">
+            <textarea id="Editdemo" name="content" placeholder="请输入项目内容" class="layui-textarea"></textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+        </div>
+    </div>
+</form>
+</body>
+</html>

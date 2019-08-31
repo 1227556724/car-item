@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>CMS系统</title>
+    <link rel="stylesheet" href="__ADMIN_CSS__/layui.css">
+</head>
+<style>
+    body{
+        user-select:none ;
+    }
+    .layui-tab-card{
+        width:100%;
+        height:calc(100% - 20px);
+        position: relative;
+        box-sizing: border-box;
+    }
+    .layui-tab-item{
+       width:100%;
+        height:100%;
+    }
+    .layui-tab-content{
+        position: absolute;
+        top: 41px;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        border: 1px solid #e6e6e6;
+        border-top: 0;
+    }
+    iframe{
+        width:100%;
+        height:100%;
+        border:0;
+    }
+</style>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">图腾后台管理系统</div>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                    {$username}
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="/pastry/public/index/index/index">转至首页</a></li>
+            <li class="layui-nav-item"><a href="/pastry/public/admin/main/back">退了</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                <li class="layui-nav-item">
+                    <a href="javascript:;">管理员</a>
+                    <dl class="layui-nav-child">
+                        <dd id="dd" data-id="1-1" data-url="/pastry/public/admin/admin/index"><a href="javascript:;">展示管理员</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">导航管理</a>
+                    <dl class="layui-nav-child">
+                        <dd id="dd" data-id="1-1" data-url="/pastry/public/admin/nav/addindex"><a href="javascript:;">添加导航</a></dd>
+                        <dd id="dd"  data-id="1-2" data-url="/pastry/public/admin/nav/index"><a href="javascript:;">展示导航</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">轮播图管理</a>
+                    <dl class="layui-nav-child">
+                        <dd id="dd" data-id="2-1" data-url="/pastry/public/admin/slider/addindex"><a href="javascript:;">添加</a></dd>
+                        <dd id="dd" data-id="2-2" data-url="/pastry/public/admin/slider/index"><a href="javascript:;">展示轮播图</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">关于我们</a>
+                    <dl class="layui-nav-child">
+                        <dd id="dd" data-id="3-2" data-url="/pastry/public/admin/about/index"><a href="javascript:;">展示关于我们</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">团队管理</a>
+                    <dl class="layui-nav-child">
+                        <dd id="dd" data-id="4-1" data-url="/pastry/public/admin/team/addindex"><a href="javascript:;">添加团队</a></dd>
+                        <dd id="dd" data-id="4-2" data-url="/pastry/public/admin/team/index"><a href="javascript:;">展示团队</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">产品管理</a>
+                    <dl class="layui-nav-child">
+                        <dd id="dd" data-id="5-1" data-url="/pastry/public/admin/product/addindex"><a href="javascript:;">添加产品</a></dd>
+                        <dd id="dd" data-id="5-2" data-url="/pastry/public/admin/product/index"><a href="javascript:;">展示产品</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">服务项目</a>
+                    <dl class="layui-nav-child">
+                        <dd id="dd" data-id="8-1" data-url="/pastry/public/admin/service/addindex"><a href="javascript:;">添加服务项目</a></dd>
+                        <dd id="dd" data-id="8-2" data-url="/pastry/public/admin/service/index"><a href="javascript:;">展示服务项目</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">新闻资讯管理</a>
+                    <dl class="layui-nav-child">
+                        <dd id="dd" data-id="6-2" data-url="/pastry/public/admin/news/index"><a href="javascript:;">展示新闻资讯</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">预约服务</a>
+                    <dl class="layui-nav-child">
+                        <dd id="dd" data-id="7-1" data-url="/pastry/public/admin/order/index"><a href="javascript:;">预约名单</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">数据可视化</a>
+                    <dl class="layui-nav-child">
+                        <dd id="dd" data-id="9-1" data-url="/pastry/public/admin/echarts/index"><a href="javascript:;">数据可视化</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;width:100%;height:100%;box-sizing: border-box;">
+            <div class="layui-tab layui-tab-card" lay-filter="demo"  lay-allowClose="true">
+                <ul class="layui-tab-title">
+                    <li class="layui-this" lay-id="1-2">展示导航</li>
+                </ul>
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show">
+                        <iframe src="/pastry/public/admin/nav/index" frameborder="0"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+<script src="__ADMIN_JS__/layui.js"></script>
+<script>
+    //JavaScript代码区域
+    layui.use('element', function(){
+        var {element,$} = layui;
+        // 获取元素添加点击事件
+        $('.layui-nav-child>dd').on('click',function(){
+            // 判断页面中是否存在tab选项卡
+            // 不存在添加=>选中
+            // 存在，添加||选中
+            // 页面存在 是否有一个即将点击的相同，有选中切换，没有添加选中
+            var athis=$(this);
+            var title=athis.children('a').text();
+            var id=athis.data('id');
+            var tabLi=$('li[lay-id]');
+            var url=athis.data('url');
+            $(".layui-tab-title").on('click','li',function(){
+                $("#dd").removeClass();
+            })
+        if(tabLi.length){
+            // 通过一个开关进行判断
+                var flag=false;
+                $.each(tabLi,(index,ele)=>{
+                    if(ele.getAttribute('lay-id')==id){
+                        flag=true;
+                    }
+                })
+                // 如果flag为真就创建
+                if(!flag){
+                    element.tabAdd('demo',{
+                        title,
+                        content:'<iframe src="'+url+'">',
+                        id
+                        })
+                    }
+                element.tabChange('demo',id);
+            }else{
+                element.tabAdd('demo',{
+                    title,
+                    content:'<iframe src="'+url+'">',
+                    id
+                })
+                element.tabChange('demo',id);
+            }
+        })
+    });
+</script>
+</body>
+</html>

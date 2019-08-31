@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <meta name="keywords" content="">
+    <meta name="description">
+    <meta name="author">
+    <title>seo </title>
+    <link rel="stylesheet" href="__ADMIN_CSS__/layui.css">
+</head>
+<style>
+    .form-one{
+        position: absolute;
+        top:31px;
+        z-index: 9999;
+    }
+    .layui-table-cell {
+        text-align: center;
+    }
+    #addForm{
+        display: none;
+        margin-top: 30px;
+    }
+    #editForm{
+        display: none;
+        margin-top: 30px;
+    }
+    .layui-form-label {
+        padding-right: 0;
+        text-align: left;
+        padding-left: 20px;
+        width: 70px;
+    }
+
+    .layui-input-block {
+        width: 70%;
+        margin-left: 95px;
+    }
+
+    .submitbtn {
+        margin-left: 120px;
+    }
+
+    table {
+        text-align: center;
+    }
+
+    .layui-table-cell {
+        text-align: center;
+    }
+    .layui-form-item{
+        margin-bottom: 28px;
+    }
+    .layui-form-item .layui-inline{
+        margin-right:0;
+    }
+    .layui-form-label{
+        padding-left:0;
+    }
+    .layui-form-item{
+        margin-bottom:0;
+        margin-left:4px;
+    }
+    .layui-form-pane .layui-form-label{
+        padding:8px 0;
+        width:68px;
+    }
+</style>
+<body>
+    <div style="padding: 15px;">
+        <form action="" class="layui-form form-one">
+            <div class="layui-form-item layui-form-pane">
+                <div class="layui-inline">
+                    <label class="layui-form-label ">导航名称</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                        <input type="text" name="navname" placeholder="搜索导航" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">模板信息</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                        <input type="text" name="url" placeholder="搜索模板" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">排序</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                        <input type="text" name="sort" placeholder="搜索序号" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemos">搜索</button>
+            </div>
+        </form>
+        <table id="demo" lay-filter="test" lay-data="{id: 'idTest'}"></table>
+
+    </div>
+
+    <script src="__ADMIN_JS__/layui.js"></script>
+    <script type="text/html" id="titleTpl">
+
+        <button type="button" class="layui-btn layui-btn-warm  layui-btn-sm" onclick="edit({{ d.id }},this)">编辑</button>
+        <button type="button" class="layui-btn layui-btn-danger  layui-btn-sm" onclick="del({{ d.id }},this)">删除</button>
+
+    </script>
+    <script>
+            var $,table,form,index2
+        layui.use(['element','table','layer','form'],function(){
+            var {element,layer}=layui;
+            $=layui.jquery;
+            table=layui.table;
+            form=layui.form;
+           var tableIns= table.render({
+                elem:'#demo',
+                url:'/pastry/public/admin/nav/find',
+                page:true,
+                limit:5,
+                limits:[5,10,15],
+                toolbar:true,
+                cols:[[
+                    {field:"id",title:"ID",width:100,sort:true},
+                    {field:"navname",title:"导航名称"},
+                    {field:"url",title:"模板名称"},
+                    {field:"sort",title:"排序",templet:function(d){
+                            return `<input type="text"   name="sort" value="${d.sort}" onchange="sorts(${d.id},this)" style="width:50px;text-align: center;cursor: pointer;   ">`
+                        }},
+                    {title:"操作",templet:'#titleTpl'},
+                ]]
+            })
+            // 修改表格
+            form.on('submit(formDemoUp)',function (data) {
+                var qs= data.field;
+                $.ajax({
+                    url:'/pastry/public/admin/nav/update',
+                    data:qs,
+                    type:'post',
+                    dataType:'json',
+                    success:function(res){
+                        var {code,msg}=res;
+                        if(code===200){
+                            layer.close(index2);
+                            layer.msg(msg,{icon:1,time:600});
+                            table.reload('demo',{
+                                url:"/pastry/public/admin/nav/find"
+                            })
+                        }else{
+                            layer.msg(msg,{icon:2,time:600});
+                        }
+                    }
+                })
+                return false
+            })
+            // 搜索表格进行重载
+            form.on('submit(formDemos)',function(data){
+                var qs=data.field;
+                tableIns.reload({
+                    where: qs
+                    ,page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                });
+                return false
+            })
+        })
+            // 排序
+            function  sorts(id,obj) {
+                var sort =$(obj).val()
+                var id=id;
+                $.ajax({
+                    url:'/pastry/public/admin/nav/sort',
+                    data:{sort,id},
+                    type:'post',
+                    dataType:'json',
+                    success:function(res){
+                        var {code,msg}=res;
+                        if(code===200){
+                            layer.msg(msg,{icon:1,time:600});
+                            table.reload('demo',{
+                                url:'/pastry/public/admin/nav/find'
+                            })
+                        }else{
+                            layer.msg(msg,{icon:2,time:600});
+                        }
+                    }
+                })
+            }
+            // 删除数据
+        function del(id,obj){
+            console.log(id);
+            layer.confirm('您确定要删除吗？', {
+                title:"删除导航",
+                skin: 'layui-layer-molv',
+                btn: ['确认','取消'] //按钮,
+            },function(){
+                $.get('/pastry/public/admin/nav/del',{id:id},function (res) {
+                    var {code,msg}=res;
+                    if(code===200){
+                        $(obj).parents('tr').remove();
+                        layer.msg(msg,{icon:1,time:500})
+                        table.reload('demo',{
+                            url:'/pastry/public/admin/nav/find',
+                        })
+                    }else{
+                        layer.msg(msg,{icon:1,time:500})
+                    }
+                })
+            },function(){
+                layer.close()
+            })
+        }
+            // 修改数据
+        function edit(id,obj){
+            index2=layer.open(
+                {
+                    title: "修改导航信息",
+                    skin: 'layui-layer-molv',
+                    type: 1,
+                    area: ['420px', '350'], //宽高
+                    content: $('#editForm'),
+                });
+            $.get('/pastry/public/admin/nav/edit',{id:id},function(res){
+                console.log(res);
+                $("#editForm  [name='nameUpdate']").val(res.navname);
+                    $("#editForm  [name='urlUpdate']").val(res.url);
+                    $("#editForm  [name='sortupdate']").val(res.sort);
+                    $("#editForm [name='id']").val(res.id);
+            })
+        }
+
+    </script>
+    <!--    修改信息表单-->
+    <form class="layui-form" id="editForm">
+        <div class="layui-form-item">
+            <label class="layui-form-label">导航信息</label>
+            <input type="hidden" name="id" id="">
+            <div class="layui-input-block">
+                <input type="text" name="nameUpdate" id="name" required lay-verify="required" placeholder="请输入导航信息" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">模块</label>
+            <div class="layui-input-block">
+                <input type="text" name="urlUpdate" id="url" required lay-verify="required" placeholder="请输入模块" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">排序</label>
+            <div class="layui-input-block">
+                <input type="number" name="sortupdate" id="sort"  required lay-verify="required" placeholder="请输入排序" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block submitbtn">
+                <button class="layui-btn" lay-submit lay-filter="formDemoUp">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

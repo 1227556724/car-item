@@ -1,0 +1,311 @@
+/* 轮播图 */
+.bitBanner {
+    width: 100%;
+    height: 566px;
+    background: #000;
+    position: relative;
+    overflow: hidden;
+}
+
+.bitBanner .bitImg {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.bitBanner .bitImg .img-bn {
+    position: absolute;
+    top: 0;
+    left: 1349px;
+    width: 100%;
+    height: 100%;
+    background: no-repeat;
+}
+.bitBanner .bitImg .img-bn1 img{
+    width:1349px;
+    height:566px;;
+}
+.bitBanner .bitImg .img-bnt2 img{
+    width:1349px;
+    height:566px;
+}
+
+.bitBanner .tp-bullets {
+    height: 6px;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform:translate(-50%);
+    margin: auto;
+    cursor: pointer;
+}
+
+.bitBanner .tp-bullets .bullet {
+    width: 44px;
+    height: 6px;
+    background: #fff;
+    margin: 0 10px;
+    float: left;
+    overflow: hidden;
+}
+
+.bitBanner .tp-bullets .bullet2 {
+    margin-right: 0;
+}
+
+.bitBanner .tp-bullets .selected {
+    background: #FF6000;
+}
+
+.bitBanner .tparrows {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    cursor: pointer;
+    line-height: 30px;
+    text-align: center;
+    color: #fff;
+    font-size: 40px;
+}
+
+.bitBanner .left {
+    left: 20px;
+    transition: all ease-out 0.3s;
+    background: url(../img/jiant.png) no-repeat 0 0;
+}
+
+.bitBanner .tparrows:hover {
+    background-position: 0 -40px;
+}
+
+.bitBanner .right {
+    right: 20px;
+    transition: all ease-out 0.3s;
+    background: url(../img/jiant2.png) no-repeat 0 0;
+}
+
+.bitBanner .tparrows .icon-jt {
+    font-size: 30px;
+}
+
+/* 轮播图 */
+/* 内容块 */
+.bit-content {
+    width: 100%;
+    margin-bottom: 40px;
+    overflow: hidden;
+}
+
+.bit-content .wf-wrap {
+    width: 1024px;
+    height: 1310px;
+    margin: auto;
+    background: #fff;
+    overflow: hidden;
+
+}
+
+.bit-content .wf-wrap .bg-text {
+    margin-top: 8px;
+    padding: 40px 40px;
+    text-align: center;
+}
+
+.bit-content .wf-wrap .bg-text .tp-text {
+    font-size: 36px;
+    color: #3E3E3E;
+}
+
+.bit-content .wf-wrap .bg-text .bt-text {
+    font-size: 16px;
+    color: rgb(128, 128, 128);
+    margin-top: 10px;
+}
+
+.bit-content .wf-wrap .container {
+    height: 297px;
+    width: 100%;
+    padding-top: 40px;
+}
+
+.bit-content .wf-wrap .container .row {
+    padding: 0 40px;
+    height: 100%;
+    overflow: hidden;
+}
+
+.bit-content .wf-wrap .row .row-card {
+    padding: 0 5px;
+    height: 100%;
+    float: left;
+    width: 226px;
+    margin-top: 10px;
+    transform:translateY(297px);
+    transition: all 0.3s ease 0s;
+}
+
+.bit-content .wf-wrap .row .row-card img {
+    width: 128px;
+    height: 128px;
+    display: block;
+    margin: auto;
+}
+
+.bit-content .wf-wrap .row .row-card .row-text {
+    margin-top: 20px;
+    line-height: 25px;
+    font-size: 16px;
+    color: #FF6000;
+    text-align: center;
+}
+
+.bit-content .wf-wrap .row .row-card .qfe-wrapper {
+    height: 18px;
+    text-align: center;
+    line-height: 18px;
+}
+
+.bit-content .wf-wrap .row .row-card .qfe-wrapper img {
+    width: 182px;
+    height: 1px;
+    display: inline-block;
+    margin: auto;
+    vertical-align: middle;
+}
+
+.bit-content .wf-wrap .row .row-card .content-tx {
+    font-size: 14px;
+    color: #8d9095;
+    line-height: 1.5em;
+}
+
+.bit-content .wf-wrap .row .row-card .content-txo {
+    padding: 0 15px;
+}
+
+.bit-content .wf-wrap .bg-text .bt-font {
+    font-size: 40px;
+}
+
+.bit-content .wf-wrap .bg-text .img-car {
+    margin: 20px 0;
+    width: 934px;
+    height: 69px;
+}
+
+.bit-content .wf-wrap .bg-text .img-car img {
+    width: 934px;
+}
+
+.bit-content .wf-wrap .pd-text {
+    padding-bottom: 0;
+}
+
+.bit-content .wf-wrap .bg-company {
+    margin-top: 0
+}
+
+.bit-content .wf-wrap .bg-company .left-img {
+    margin-top: 10px;
+    padding: 0 5px;
+    float: left;
+    width: 304px;
+    height: 203px;
+
+}
+.bit-content .wf-wrap .bg-company .img-one{
+    display: flex;
+    align-items:center;
+    justify-content: center;
+}
+.bit-content .wf-wrap .bg-company .right {
+    width: 619px;
+    height: 218px;
+}
+
+.bit-content .wf-wrap .bg-company .left-img img {
+    width: 224px;
+    height: 153px;
+    opacity: 0;
+    vertical-align: middle;
+}
+
+.bit-content .wf-wrap .bg-company .left-img .tp-card {
+    height: 30px;
+    border-bottom: 1px solid #efefef;
+    line-height: 15px;
+}
+
+.bit-content .wf-wrap .bg-company .left-img .tp-card .lf-font {
+    float: left;
+    font-size: 18px;
+    color: #ff6000;
+}
+
+.bit-content .wf-wrap .bg-company .left-img .tp-card .rg-font {
+    float: right;
+    font-size: 12px;
+    color: #ff6000;
+}
+
+.bit-content .wf-wrap .bg-company .left-img .tp-card .bt-card {
+    margin-top: 10px;
+
+}
+
+.bit-content .wf-wrap .bg-company .left-img .column {
+    padding-left: 30px;
+}
+
+.text-cn {
+    line-height: 1.5em;
+    color: #808080;
+    font-size: 14px;
+    text-align: left;
+    padding-top: 20px;
+}
+
+.text-cn2 {
+    padding-top: 16px;
+}
+
+.bit-content .wf-wrap .bg-company .left-img .bt-card ul {
+    margin-top: 10px;
+}
+
+.bit-content .wf-wrap .bg-company .left-img .bt-card ul li {
+    padding: 0 5px 5px 5px;
+    margin-bottom: 5px;
+    border-bottom: 1px dotted;
+    font-size: 14px;
+    overflow: hidden;
+    color: #8d9095;
+}
+
+.bit-content .wf-wrap .bg-company .left-img .bt-card ul li:hover a {
+    color: #f0443a;
+}
+
+.bit-content .wf-wrap .bg-company .left-img .bt-card ul li:hover span {
+    color: #f0443a;
+}
+
+.bit-content .wf-wrap .bg-company .left-img .bt-card ul li a {
+    float: left;
+    color: #8d9095;
+}
+
+.bit-content .wf-wrap .bg-company .left-img .bt-card ul li span {
+    float: right;
+    font-size: 12px;
+}
+
+.bit-content .wf-wrap .bg-company .left-img .column-lf {
+    padding-left: 0;
+    padding-right: 30px;
+}
+
+/* <!-- 内容块结束 --> */

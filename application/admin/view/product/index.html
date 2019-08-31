@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <meta name="keywords" content="">
+    <meta name="description">
+    <meta name="author">
+    <title>seo </title>
+    <link rel="stylesheet" href="__ADMIN_CSS__/layui.css">
+</head>
+<style>
+    table{
+        text-align: center;
+    }
+    #editForm{
+        display: none;
+        margin: 20px 20px;
+    }
+    .box{
+        margin:20px 20px;
+        overflow: hidden;
+    }
+    .layui-table-cell{
+        text-align: center;
+    }
+
+    .layui-form-item .layui-input-inline{
+        width: 168px;
+    }
+    .layui-form-pane .btn{
+        margin-left: 0;
+    }
+    .form-btn{
+        text-align: center;
+    }
+    tbody tr{
+        height:80px;
+    }
+    .addbtn{
+        position:absolute;
+        z-index:1000;
+        top: 30px;
+    }
+    .layui-table-cell {
+        height: 60px;
+        line-height: 60px;
+    }
+    .layui-table img{
+        height: 60px;
+    }
+</style>
+<body>
+<div style="padding: 15px;">
+<!--    搜索查询表单-->
+    <form action="" class="layui-form form-one addbtn">
+        <div class="layui-form-item layui-form-pane">
+            <div class="layui-inline">
+                <label class="layui-form-label ">产品类型</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="typeid" placeholder="搜索产品类型" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">产品名称</label>
+                <div class="layui-input-inline" >
+                    <input type="text" name="url" placeholder="搜索产品名称" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">产品库存</label>
+                <div class="layui-input-inline" >
+                    <input type="text" name="stock" placeholder="搜索库存" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemos">搜索</button>
+        </div>
+    </form>
+    <table id="demo" lay-filter="test" lay-data="{id: 'idTest'}"></table>
+
+</div>
+
+<script src="__ADMIN_JS__/layui.js"></script>
+
+<script type="text/html" id="toolbar">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="update">编辑</button>
+        <button class="layui-btn layui-btn-sm  layui-btn-danger" lay-event="del">删除</button>
+    </div>
+</script>
+<script type="text/html" id="bannerTpl">
+    {{# var arr=d.img2.split(',') }}
+    {{# arr.forEach(ele=>{ }}
+        <img src="{{ele}}" alt="">
+    {{#  }) }}
+</script>
+
+<script>
+    var $,table,form,index2,layer;
+    layui.use(['element','table','layer','form','upload','layedit'],function(){
+        upload=layui.upload;
+        $=layui.jquery;
+        layedit=layui.layedit;
+        layer=layui.layer;
+        table=layui.table;
+        form=layui.form;
+        // 表单渲染
+        var tableIns= table.render({
+            elem:'#demo',
+            url:'/pastry/public/admin/product/query',
+            page:true,
+            limit:5,
+            limits:[5,10,15],
+            toolbar:true,
+            cols:[[
+                {field:"ids",title:"ID",sort:true,width:50},
+                {field:"username",title:"产品分类"},
+                {field:"goodsname",title:"产品名称"},
+                {field:"market_price",title:"市场价"},
+                {field:"price",title:"零售价"},
+                {field:"img1",title:"缩略图",templet:function(d){
+                    return '<img src="'+d.img1+'" />'
+                    }},
+                {field:"img2",title:"轮播图",templet:'#bannerTpl'},
+                {field:"uppershelf",title:"是否下架"},
+                {fixed: 'right',title:"操作",templet:'#toolbar',width:130},
+            ]]
+        })
+        // 缩略图修改
+        upload.render({
+            elem:'#test1',
+            url:'/pastry/public/admin/upload/index',
+            size:500,
+            acceptMime:'image/*',
+            done:function(res){
+                $('input[type=hidden][name=img1]').val(res.src);
+                var html='<img src="'+res.src+'" style="width:100px;"/>';
+                $("#demo1").html(html);
+            }
+        })
+        // 轮播图修改
+        upload.render({
+            elem:'#test2',
+            url:'/pastry/public/admin/upload/index',
+            size:500,
+            acceptMime:'image/*',
+            multiple: true,
+            number:3,
+            done:function(res){
+               $("#demo2>img").length<5 && bannerUpdate(res.src)
+            }
+        })
+        function bannerUpdate(src){
+            $('input[type=hidden][name=img2]').val((index,value)=>value+src+',');
+            $('<img src="" style="width:100px;">').appendTo("#demo2").attr('src',src);
+        }
+        // 修改表格
+        // 搜索表格进行重载
+        form.on('submit(formDemos)',function(data){
+            var qs=data.field;
+            tableIns.reload({
+                where: qs
+                ,page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            });
+            return false
+        })
+        // 富文本域
+        var indexs=layedit.build('demos',{
+            tool:['image','strong','italic','underline','del','|','left','center','right','link','unlink','face'],
+            height:100,
+            uploadImage:{
+                url:'/pastry/public/admin/upload/files',
+                type:'post'
+            }
+        })
+        table.on('tool(test)',function(obj){
+            let {data,event}=obj;
+            let ids=data.ids;
+            // 删除
+            if(event=='del'){
+                layer.confirm('您确定要删除吗？', {
+                    title:"删除产品",
+                    skin: 'layui-layer-molv',
+                    btn: ['确认','取消'] //按钮,
+                },function(){
+                    $.ajax({
+                        url:'/pastry/public/admin/product/del',
+                        data:{ids},
+                        type:'post',
+                        dataType:'json',
+                        success:function (res) {
+                            var {code, msg} = res;
+                            if (code === 200) {
+                                obj.del();
+                                layer.msg(msg, {icon: 1, time: 500})
+                            } else {
+                                layer.msg(msg, {icon: 1, time: 500})
+                            }
+                        }
+                    })
+                },function(){
+                    layer.close()
+                })
+            }
+            // 修改
+            else if(event=='update'){
+                index2=layer.open(
+                    {
+                        title: "修改产品信息",
+                        skin: 'layui-layer-molv',
+                        type: 2,
+                        maxmin:true,
+                        area: ['600px', '500px'], //宽高
+                        content: '/pastry/public/admin/product/edits?ids='+ids,
+                    });
+                table.reload('demo',{
+                    url:'/pastry/public/admin/product/query',
+                })
+            }
+        })
+
+    })
+
+
+</script>
+
+</body>
+</html>

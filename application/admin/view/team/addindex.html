@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="__ADMIN_CSS__/layui.css">
+</head>
+<style>
+    .box{
+        position:absolute;
+        left:50%;
+        top:50%;
+        transform: translate(-50%,-50%);
+        padding:30px 30px;
+        box-sizing: border-box;
+        border-radius: 20px;
+        box-shadow:0 1px 20px  rgba(0,0,0,0.2 );
+    }
+    .layui-elem-quote{
+        width:600px;
+    }
+
+    .layui-form-label{
+        text-align: left;
+        width:auto;
+    }
+    .layui-elem-quote{
+        margin:26px 0;
+    }
+    blockquote{
+        width: 500px;
+    }
+    #demo2{
+        width:100%;
+    }
+    img{
+        width:100%;
+    }
+    .layui-form-item .layui-input-inline {
+        float: right;
+        width: 527px;
+        margin-right: 0;
+    }
+    .layui-input-block{
+        text-align: center;
+        margin-left:0;
+    }
+    .text{
+        display: block;
+        margin:20px auto;
+    }
+    .layui-upload{
+        text-align: center;
+    }
+    .layui-btn{
+        width:200px;
+    }
+    .layui-form-pane .layui-input-block {
+         margin-left: 0;
+        left: -1px;
+    }
+</style>
+<body>
+    <div class="box">
+        <form action="" class="layui-form layui-form-pane">
+            <div class="layui-form-item">
+                <label class="layui-form-label">姓名</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="teamname" required lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">职务</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="positions" required lay-verify="required" placeholder="请输入职务" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item name">
+                <div class="layui-upload">
+                    <input type="hidden" name="img" value="" id="himg">
+                    <button type="button" name="imgs" class="layui-btn" id="test2">图片上传</button>
+                    <span class="text" style="color: red">上传图片的最佳比例为1：2，图片大小为800*1396.</span>
+                    <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+                        <div class="layui-upload-list" id="demo2">
+                            <img src="" alt="" id="img" style="width: 300px;">
+                        </div>
+                    </blockquote>
+                </div>
+
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+<script src="__ADMIN_JS__/layui.js"></script>
+<script>
+    layui.use(['form','upload','layer'],function(){
+        var {form,upload,layer,$}=layui;
+        upload.render({
+            elem:'#test2',
+            url:'/pastry/public/admin/upload/index',
+            accept:'',
+            acceptMime:'image/*',
+            size:500,
+            done:function(res){
+                if(res.code==200){
+                    layer.msg(res.msg,{icon:1,time:600});
+                    $('#img').attr('src',res.src);
+                    $('#himg').attr('value',res.src);
+                }
+            }
+        });
+        form.on('submit(formDemo)',function(data){
+            var qs=data.field;
+            $.ajax({
+                url:'/pastry/public/admin/team/add',
+                data:qs,
+                type:'post',
+                dataType:'json',
+                success:function(res){
+                    var {code,msg}=res;
+                    if(code===200){
+                        layer.msg(msg,{icon:1,time:600})
+                    }else{
+                        layer.msg(msg,{icon:2,time:600})
+                    }
+                }
+            })
+            return false;
+        })
+    })
+
+
+</script>
+</body>
+</html>

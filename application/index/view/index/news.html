@@ -1,0 +1,134 @@
+{include file='public/header' title='汽车维修美容 | 新闻资讯'}
+
+<link rel="stylesheet" href="__INDEX_CSS__/news.css">
+    <div class="cn-content">
+        <div class="bit-wrap">
+            <div class="img clearfix .imgtwo">
+                <img src="__INDEX_IMG__/xw.jpg" alt="" class="img-two">
+            </div>
+            <div class="about-tt clearfix">
+                <span class="line left"></span>
+                <div class="about-title">
+                    <div class="hd-title">
+                        <div class="tp-title">养护知识</div>
+                        <div class="hd-subtitle">Knowledgement</div>
+                    </div>
+                </div>
+                <span class="line right"></span>
+            </div>
+        </div>
+    </div>
+    <div class="bg-text pd-text bg-company clearfix">
+        <div class="left-img right">
+            <div class="column column-lf">
+                <div class="bt-card">
+                    <ul>
+                        {volist name="news" id="vo"}
+                        <li><a href="/pastry/public/index/index/knowledge?kid={$vo['id']}" >{$vo['title']}</a><span>{$vo['time']}</span></li>
+                        {/volist}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="cn-content cn-content-bt">
+        <div class="bit-wrap">
+            <div class="img clearfix .imgtwo">
+                <img src="__INDEX_IMG__/xw2.jpg" alt="" class="img-two">
+            </div>
+        </div>
+    </div>
+    <!-- 底部 -->
+    <div class="footer clearfix">
+        <div class="wf-wrap">
+            <div class="clearfix">
+                <div class="wrap-content">
+                    <p class="color"> <strong>一店地址</strong> </p>
+                    <p class="text-two">门店地址：上海市松江区佘山林荫大道18号 </p>
+                    <p>预约电话：<a href="" class="color">400-562-6654 </a></p>
+                    <p class="text-two"><strong class="bold">营业时间：</strong></p>
+                    <p class="sm-font">周一 ~周五：上午9:30-下午8:00</p>
+                    <p class="sm-font">周六、周日：上午10:00-下午9:00</p>
+                </div>
+                <div class="wrap-content">
+                    <p class="color"> <strong>二店地址</strong> </p>
+                    <p class="text-two">门店地址：上海市松江区佘山林荫大道18号 </p>
+                    <p>预约电话：<a href="" class="color">400-562-6654 </a></p>
+                    <p class="text-two"><strong class="bold">营业时间：</strong></p>
+                    <p class="sm-font">周一 ~周五：上午9:30-下午8:00</p>
+                    <p class="sm-font">周六、周日：上午10:00-下午9:00</p>
+                </div>
+                <div class="wrap-content">
+                    <p class="color"> <strong>三店地址</strong> </p>
+                    <p class="text-two">门店地址：上海市松江区佘山林荫大道18号 </p>
+                    <p>预约电话：<a href="" class="color">400-562-6654 </a></p>
+                    <p class="text-two"><strong class="bold">营业时间：</strong></p>
+                    <p class="sm-font">周一 ~周五：上午9:30-下午8:00</p>
+                    <p class="sm-font">周六、周日：上午10:00-下午9:00</p>
+                </div>
+            </div>
+            <div class="column-inner clearfix">
+                <ul>
+                    <li>
+                        <div class="img img1"></div>
+                    </li>
+                    <li>
+                        <div class="img img2"></div>
+                    </li>
+                    <li>
+                        <div class="img img3"></div>
+                    </li>
+                    <li>
+                        <div class="img img4"></div>
+                    </li>
+                    <li>
+                        <div class="img img5"></div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="return">
+        <i class="iconfont icon-iconfonticontrianglecopy"></i>
+    </div>
+    <!-- 底部 -->
+    <script src="__INDEX_JS__/jquery-3.4.1.min.js"></script>
+    <script src="__INDEX_JS__/return.js"></script>
+    <script>
+    let button = document.querySelector("button");
+    let btnbox=document.querySelector('.column-lf')
+    let content=document.querySelectorAll('.bg-company .left-img .bt-card ul li a');
+    let contents=document.querySelector('.big-content')
+    // function show(id){
+    //     contents.style.cssText = 'display:block';
+    //     btnbox.style.cssText = "display:none";
+    //     $(".big-content .time").html('发布日期：');
+    //     $.ajax({
+    //         url: '/pastry/public/index/index/news1',
+    //         type: 'post',
+    //         data:{id},
+    //         dataType: 'json',
+    //         success: function (res) {
+    //             console.log(res);
+    //             $(".big-content .title").html(res.title);
+    //             $(".big-content .time").append(res.time);
+    //             $(".big-content .tx-content").html(res.content);
+    //         }
+    //     })
+    // }
+    button.onmouseover = () => {
+        button.style.cssText = "background:#333;color:#fff;"
+    }
+    button.onmouseout = () => {
+        button.style.cssText = "background:#fff;color:#000;"
+    }
+    button.onclick = () => {
+        $(".big-content .title").html('');
+        contents.style.cssText='display:none';
+        btnbox.style.cssText="display:block";
+    }
+
+    </script>
+</body>
+
+</html>

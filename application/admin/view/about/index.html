@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="__ADMIN_CSS__/layui.css">
+    <title>Document</title>
+</head>
+<style>
+
+    .layui-table-cell {
+        text-align: center;
+    }
+    #addNews{
+        display: none;
+        margin-top: 30px;
+    }
+    #editNews{
+        display: none;
+        margin-top: 30px;
+    }
+
+    .addbtn{
+        position:absolute;
+        z-index:1000;
+        top: 30px;
+    }
+    form{
+        margin:20px 20px;
+    }
+    tbody tr{
+        height:90px;
+    }
+    .layui-table-cell {
+        height: 60px;
+        line-height: 60px;
+    }
+    .layui-form-pane .layui-input-block {
+        margin-left: 0;
+        text-align: center;
+        left: -1px;
+    }
+</style>
+<body>
+<!--添加-->
+<form action=""  class="layui-form layui-form-pane" id="addNews" lay-filter="addtest1">
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">公司简介</label>
+        <div class="layui-input-block">
+            <textarea id="textDemo" name="ades" placeholder="" class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-upload">
+            <button type="button" class="layui-btn"  id="test1">图片上传</button>
+            <span style="color:red;">上传图片的最佳比例为16:9，图片最大尺寸为500KB</span>
+            <input type="hidden"name="aimg" id="img-one">
+            <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+                预览图：
+                <div class="layui-upload-list" id="demo1">
+                    <img src="" alt="" id="img">
+                </div>
+            </blockquote>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">关键词</label>
+        <div class="layui-input-inline">
+            <input type="text" name="keywords" required lay-verify="required" placeholder="请输入关键词" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button type="submit" class="layui-btn" lay-submit lay-filter="addDemo">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+<!--    修改-->
+<form action="" class="layui-form layui-form-pane" id="editNews" lay-filter="addtest1">
+    <input type="hidden" id="newsId" name="id">
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">公司简介</label>
+        <div class="layui-input-block">
+            <textarea id="textEdit" name="ades" placeholder="" class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-upload">
+            <button type="button" class="layui-btn"  id="test2">详情图上传</button>
+            <span style="color:red;">上传图片的最佳比例为16:9，图片最大尺寸为500KB</span>
+            <input type="hidden"name="aimg" id="imgEdit">
+            <input type="hidden" name="id" id="id">
+            <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+                预览图：
+                <div class="layui-upload-list" id="demoEdit">
+                    <img src="" alt="" id="img1"  style="width:300px">
+                </div>
+            </blockquote>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">关键词</label>
+            <div class="layui-input-inline">
+                <input type="text" id="key" name="keywords" required lay-verify="required" placeholder="请输入关键词" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button type="submit" class="layui-btn" lay-submit lay-filter="editDemo">立即修改</button>
+            <button type="button" class="layui-btn layui-btn-primary" id="cancel">取消</button>
+        </div>
+    </div>
+</form>
+<div style="padding: 15px;">
+    <button type="submit" class="layui-btn layui-btn-normal  addbtn">添加信息</button>
+    <table id="demo" lay-filter="test" lay-data="{id: 'idTest'}"></table>
+
+</div>
+<script src="__ADMIN_JS__/layui.js"></script>
+<script type="text/html" id="titleTpl">
+
+    <button type="button" class="layui-btn layui-btn-warm  layui-btn-sm" onclick="edit({{ d.id }},this)">编辑</button>
+    <button type="button" class="layui-btn layui-btn-danger  layui-btn-sm" onclick="del({{ d.id }},this)">删除</button>
+
+</script>
+<script>
+    //    初始化页面
+    var $,index,layer,form,table,index2;
+    layui.use(['element', 'layer', 'jquery', 'form', 'table','layedit','upload'], function () {
+        var element = layui.element;
+        table = layui.table;
+        layer = layui.layer;
+        $ = layui.jquery;
+        form = layui.form;
+       var {upload,layedit }=layui;
+        var tableIns= table.render({
+            elem: '#demo',
+            url: '/pastry/public/admin/about/query' ,//数据接口
+            page: true ,//开启分页
+            limit:5,
+            limits:[5,10,15],
+            toolbar:true,
+            cols: [[ //表头
+                {field: 'id', title: 'ID', width:80, sort: true}
+                ,{field: 'ades', title: '内容简介',width:500}
+                ,{field: 'aimg', title: '图片',templet:function(d){
+                        return `<img src="${d.aimg}" class="imgs" />` }}
+                ,{title: '操作',templet:'#titleTpl',fixed: 'right',}
+            ]]
+        });
+        $(".addbtn").click(function () {
+            index=layer.open({
+                type:1,
+                title:'添加公司简介',
+                skin:'layui-layer-molv',
+                area:['600px',],
+                content:$('#addNews')
+            })
+        });
+        upload.render({
+            elem:'#test1',
+            url:'/pastry/public/admin/upload/index',
+            size:500,
+            acceptMime:'image/*',
+            done:function(res){
+                $('#img').attr('src',res.src);
+                $('#img-one').val(res.src);
+            }
+        })
+        upload.render({
+            elem:'#test2',
+            url:'/pastry/public/admin/upload/index',
+            size:500,
+            acceptMime:'image/*',
+            done:function(res){
+                $('#img1').attr('src',res.src);
+                $('#imgEdit').val(res.src);
+            }
+        })
+
+        var indexs=layedit.build('textDemo',{
+            height:100,
+            tool:['strong','italic','underline','del','|','left','center','right','link','unlink','face','image'],
+            uploadImage:{
+                url:'/pastry/public/admin/upload/files',
+                type:'post'
+            }
+        })
+
+        // 修改文本域
+        var indexsEdit=layedit.build('textEdit',{
+            height:100,
+            tool:['image','strong','italic','underline','del','|','left','center','right','link','unlink','face'],
+            uploadImage:{
+                url:'/pastry/public/admin/upload/files',
+                type:'post'
+            }
+        })
+        //添加 => 立即提交
+        form.on('submit(addDemo)',function(data){
+            var qs=data.field
+            console.log(qs);
+            qs.ades=layedit.getContent(indexs);
+            $.ajax({
+                url:'/pastry/public/admin/about/add',
+                type:'post',
+                data:qs,
+                dataType:'json',
+                success:function(res){
+                    var {code,msg}=res;
+                    if(code===200){
+                        layer.close(index);
+                        layer.msg(msg,{icon:1,time:500});
+                        table.reload('demo',{
+                            url: '/pastry/public/admin/about/query'
+                        })
+                    }else{
+                        layer.msg(msg,{icon:2,time:600});
+                    }
+                }
+            })
+            return false;
+        });
+        // 编辑 => 立即修改
+        form.on('submit(editDemo)',function(data){
+            var qs=data.field;
+            qs.ades=layedit.getContent(indexsEdit);
+            console.log(qs);
+            $.ajax({
+                url:'/pastry/public/admin/about/update',
+                type:'post',
+                data:qs,
+                dataType:'json',
+                success:function(res){
+                    var {code,msg}=res;
+                    if(code===200){
+                        layer.msg(msg,{icon:1,time:500});
+                        layer.close(index2);
+                        table.reload('demo',{
+                            url: '/pastry/public/admin/about/query'
+                        })
+                    }else{
+                        layer.msg(msg,{icon:2,time:500});
+                        layer.close(index2);
+                    }
+                }
+            })
+            return false;
+        });
+        // 编辑 => 取消
+    })
+    //    删除关于我们
+    function del(id,obj){
+        layer.confirm('您是要删除吗？', {
+            title:"删除公司简介",
+            skin: 'layui-layer-molv',
+            btn: ['确定','取消'] //按钮
+        }, function(){
+            $.ajax({
+                url:'/pastry/public/admin/about/del',
+                type:'post',
+                data:{id},
+                dataType:'json',
+                success:function(res){
+                    var {code,msg}=res;
+                    if(code===200){
+                        layer.msg(msg,{icon:1,time:500});
+                        table.reload('demo',{
+                            url: '/pastry/public/admin/about/query'
+                        })
+                    }else{
+                        layer.msg(msg,{icon:2,time:600});
+                    }
+                }
+            })
+        }, function(){
+            layer.close();
+        });
+    }
+    // 修改
+    function edit(id){
+        index2=layer.open({
+            type:1,
+            title:'修改公司简介',
+            skin:'layui-layer-molv',
+            area:['500px','450px'],
+            content:$('#editNews')
+        });
+        $.ajax({
+            url:'/pastry/public/admin/about/edit',
+            type:'post',
+            data:{id},
+            dataType:'json',
+            success:function(res){
+                var data=res.data;
+                if(res.code===200){
+                    $("#img1").attr('src',data.aimg);
+                    $('#id').val(data.id)
+                    $("#key").val(data.keywords);
+                    $("#textEdit").html(data.ades);
+                }
+            }
+        })
+    }
+</script>
+
+</body>
+</html>

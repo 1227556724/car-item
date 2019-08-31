@@ -1,0 +1,457 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="__ADMIN_CSS__/layui.css">
+    <title>Document</title>
+</head>
+<style>
+    form{
+        padding:0 20px;
+    }
+    #addForm {
+        display: none;
+        margin-top: 30px;
+    }
+    #editForm{
+        display: none;
+        margin-top: 30px;
+    }
+    .layui-form-label {
+        padding-right: 0;
+        text-align: left;
+        padding-left: 20px;
+        width: 70px;
+    }
+
+    .layui-input-block {
+        width: 70%;
+        margin-left: 95px;
+    }
+
+    .submitbtn {
+        margin-left: 120px;
+    }
+
+    table {
+        text-align: center;
+    }
+
+    .layui-table-cell {
+        text-align: center;
+    }
+    .layui-form-item{
+        /*position:relative;*/
+        margin-bottom: 28px;
+    }
+    label.error{
+        color:red;
+        position: absolute;
+        bottom:-24px;
+        left:0;
+    }
+    .addbtn{
+        position:absolute;
+        z-index:1000;
+        top:30px;
+    }
+    .form-one{
+        position: absolute;
+        top:31px;
+        left:200px;
+        z-index: 9999;
+    }
+</style>
+<body>
+<!--搜索-->
+    <form action="" class="layui-form form-one">
+    <div class="layui-form-item layui-form-pane">
+        <div class="layui-inline">
+            <label class="layui-form-label ">管理员</label>
+            <div class="layui-input-inline" >
+                <input type="text" name="username" placeholder="请输入管理员" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemos">搜索</button>
+    </div>
+</form>
+    <!--添加信息弹窗-->
+    <form class="layui-form layui-form-pane" id="addForm">
+        <div class="layui-form-item">
+            <label class="layui-form-label">姓名：</label>
+            <div class="layui-input-block">
+                <input type="text" name="username" required lay-verify="required" placeholder="请输入姓名" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">密码：</label>
+            <div class="layui-input-block">
+                <input type="password" name="password" id="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">确认密码：</label>
+            <div class="layui-input-block">
+                <input type="password" name="repassword" required lay-verify="required" placeholder="确认密码"
+                       autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">状态</label>
+            <div class="layui-input-block">
+                <input type="radio" name="status" value="0" title="黑名单" checked>
+                <input type="radio" name="status" value="1" title="白名单">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block submitbtn">
+                <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+    <!--修改信息弹窗-->
+    <form class="layui-form layui-form-pane" id="editForm">
+        <div class="layui-form-item">
+            <label class="layui-form-label">姓名：</label>
+            <div class="layui-input-block">
+                <input type="text" name="username" id="editname" disabled required lay-verify="required" placeholder="请输入姓名" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">修改密码：</label>
+            <div class="layui-input-block">
+                <input type="text" name="password" id="editpassword" required lay-verify="required" placeholder="请输入密码" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">确认密码：</label>
+            <div class="layui-input-block">
+                <input type="password" name="repassword" required lay-verify="required" placeholder="确认修改密码"
+                       autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">状态</label>
+            <div class="layui-input-block">
+                <input type="radio" name="status" value="0" title="黑名单" id="black">
+                <input type="radio" name="status" value="1" title="白名单" id="white">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block submitbtn">
+                <button class="layui-btn" lay-submit lay-filter="formDemo1">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+    <div style="padding: 15px;">
+        <button type="submit" class="layui-btn  addbtn">添加管理员</button>
+        <table id="demo" lay-filter="test" lay-data="{id: 'idTest'}"></table>
+
+    </div>
+<script src="__ADMIN_JS__/layui.js"></script>
+    <script src="__ADMIN_JS__/jquery-3.4.1.min.js"></script>
+    <script src="__ADMIN_JS__/jquery.validate.min.js"></script>
+<!--<script type="text/html" id="titleTpl3">-->
+<!---->
+<!--</script>-->
+<!--黑白名单页面渲染-->
+<script type="text/html" id="titleTpl2">
+    {{#  if(d.status==1){ }}
+    <button type="button" class="layui-btn  layui-btn-normal layui-btn-sm" onclick="status({{ d.id }},this,0)">白名单
+    </button>
+    {{#  } else { }}
+    <button type="button" class="layui-btn  layui-btn-danger  layui-btn-sm" onclick="status({{ d.id }},this,1)">黑名单
+    </button>
+    {{#  } }}
+</script>
+<!--按钮的页面渲染-->
+<script type="text/html" id="titleTpl">
+
+    <button type="button" class="layui-btn layui-btn-warm  layui-btn-sm" onclick="edit({{ d.id }},this)">编辑</button>
+    <button type="button" class="layui-btn layui-btn-danger  layui-btn-sm" onclick="del({{ d.id }},this)">删除</button>
+
+</script>
+<script>
+
+    //JavaScript代码区域
+    //    定义全局的jquery和layer
+    let $, layer,index2,form,table;
+    layui.use(['element', 'layer',  'form', 'table'], function () {
+        var element = layui.element;
+        layer = layui.layer;
+        $ = layui.jquery;
+//        记录表单
+        form = layui.form;
+//        记录表格
+        table = layui.table;
+//        记录时间
+        var laydate = layui.laydate;
+//        记录添加弹窗
+        var index
+//        添加管理员
+        $(".addbtn").click(function () {
+            index = layer.open({
+                title: "管理员信息",
+                skin: 'layui-layer-molv',
+                type: 1,
+                area: ['500px', ''], //宽高
+                content: $('#addForm'),
+            });
+            $().ready(function() {
+                $("#addForm").validate({
+                    rules:{
+                        username:{
+                            minlength:2,
+                            maxlength:18
+                        },
+                        password:{
+                            minlength:6,
+                            maxlength:18
+                        },
+                        repassword:{
+                            minlength:6,
+                            maxlength:18
+                        }
+                    },
+                    messages:{
+                        username:{
+                            minlength:"不能少于2位数",
+                            maxlength:"最多只能输入12位"
+                        },
+                        password:{
+                            minlength:"密码不能少于6位数",
+                            maxlength:"最多只能输入12位"
+                        },
+                        repassword:{
+                            minlength:"密码不能少于6位数",
+                            maxlength:"最多只能输入12位",
+                            equalTo: "两次密码输入不一致"
+                        }
+                    }
+
+                })
+            })
+        })
+
+//        提交添加数据
+        form.on('submit(formDemo)', function (data) {
+            // 利用jquery中的ajax方式获取到数据
+            let datas=data.field;
+            $.ajax({
+                url:'/pastry/public/admin/admin/add',
+                data:datas,
+                type:'post',
+                dataType:'json',
+                success:function(res){
+                    console.log(res);
+                    if (res.code == '200') {
+                        layer.close(index);
+                        layer.msg(res.msg, {icon: 1});
+                        table.reload('demo',{
+                            url:'action.php?type=find',
+                        })
+                    } else if (res.code == '400') {
+                        layer.msg(res.msg, {icon: 2});
+                    }
+                }
+            })
+
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        })
+//        数据渲染
+       var tableIns= table.render({
+            elem: '#demo',
+            url: '/pastry/public/admin/admin/finds',
+            page: true,
+            limit: 5,
+            limits: [5, 10, 15, 20],
+            toolbar: true,
+            cols: [[
+                {field: 'id', title: 'ID', flied: 'left', sort: true},
+                {field: 'username', title: '用户名'},
+                {field: 'time', title: '加入时间', templet: '#titleTpl3'},
+                {field: 'status', title: '状态', templet: '#titleTpl2'},
+                {title: '操作', templet: '#titleTpl'},
+            ]]
+        })
+        // 搜索
+        form.on('submit(formDemos)',function(data){
+            var qs=data.field;
+            tableIns.reload({
+                where: qs
+                ,page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            });
+            return false
+        })
+//        无刷新修改状态
+    });
+    //        点击状态栏修改黑白名单调用的函数
+    function status(id, obj, state) {
+        $.get('/pastry/public/admin/admin/status', {id: id, status: state}, function (res) {
+            if (state == 1) {
+                if (res.code == 200) {
+                    $(obj).parent().html(`<button  class="layui-btn  layui-btn-normal  layui-btn-sm" onclick="status(${id},this,0)">白名单</button>`);
+
+                    layer.msg(res.msg, {icon: 1});
+
+                } else {
+                    layer.msg(res.msg, {icon: 2});
+                }
+            } else {
+                if (res.code == 200) {
+                    $(obj).parent().html(`<button  class="layui-btn  layui-btn-danger  layui-btn-sm" onclick="status(${id},this,1)">黑名单</button>`);
+                    layer.msg(res.msg, {icon: 1});
+
+                } else  {
+                    layer.msg(res.msg, {icon: 2});
+                }
+            }
+        })
+
+    }
+    //    点击删除
+    function del(id,obj1){
+        layer.confirm('您确定要删除吗？', {
+            title:"删除管理员",
+            skin: 'layui-layer-molv',
+            btn: ['确认','取消'] //按钮,
+        }, function(){
+            $.get("/pastry/public/admin/admin/del",{id:id},function(dele){
+                if(dele.code===200){
+                    $(obj1).parents("tr").remove();
+                    layer.msg(dele.msg, {icon: 6,time:500});
+                    table.reload('demo',{
+                        url:'/pastry/public/admin/admin/finds',
+                    })
+                }else {
+                    layer.msg(dele.msg, {icon: 5});
+                }
+            })
+        }, function(){
+            layer.close()
+        });
+
+    }
+    //        点击修改信息
+    function edit(id,obj) {
+        let index;
+        index = layer.open({
+            title: "编辑管理员",
+            skin: 'layui-layer-molv',
+            type: 1,
+            maxmin:true,
+            area: ['420px', ''], //宽高
+            content: $('#editForm'),
+        });
+
+        $.ajax({
+            type:'get',
+            url:'/pastry/public/admin/admin/edit',
+            dataType:'json',
+            data:{id:id},
+            success:function (res) {
+                if (res.code==200){
+                    let data=res.data;
+                    $('#editForm input[name=username]').val(data['username']);
+                    if(data.status==1){
+                        $('#editForm input[name=status][value="1"]').prop("checked",true);
+                        form.render()
+                    }else {
+                        $('#editForm input[name=status][value="0"]').prop("checked",true);
+                        form.render()
+                    }
+
+                } else{
+                    layer.msg(res.msg,{icon:2})
+                }
+            }
+        });
+        $().ready(function() {
+            $("#editForm").validate({
+                rules:{
+                    username:{
+                        minlength:6,
+                        maxlength:18
+                    },
+                    password:{
+                        minlength:6,
+                        maxlength:18
+                    },
+                    repassword:{
+                        minlength:6,
+                        maxlength:18,
+                        equalTo:"#password"
+                    }
+                },
+                messages:{
+                    username:{
+                        minlength:"不能少于6位数",
+                        maxlength:"最多只能输入18位"
+                    },
+                    password:{
+                        minlength:"密码不能少于6位数",
+                        maxlength:"最多只能输入18位"
+                    },
+                    repassword:{
+                        minlength:"密码不能少于6位数",
+                        maxlength:"最多只能输入18位",
+                        equalTo: "两次密码输入不一致"
+                    }
+                }
+
+            })
+        })
+        // 编辑事件提交
+        form.on('submit(editFormDemo)',function (data) {
+            data.field.id=id;
+            $.ajax({
+                url:'/pastry/public/admin/admin/update',
+                type:'post',
+                dataType:'json',
+                data:data.field,
+                success:function (res) {
+                    if (res.code==200){
+                        layer.close(index);
+                        layer.msg(res.msg,{icon:1});
+                        table.reload('demo',{
+                            url:'/pastry/public/admin/admin/find'
+                        })
+                    } else{
+                        layer.msg(res.msg,{icon:2});
+                    }
+                }
+            });
+            return false
+        })
+    }
+    //    添加表单验证的校验规则
+
+</script>
+
+</body>
+</html>
+<!--1/$_post-->
+<!--2/add.php  验证数据-->
+<!--用户名为空 长度，密码长度-->
+<!--$data-->
+<!--echo json_encode($data)-->
+<!--3/js res-->
+<!--res.code  弹出提示、关闭页面层-->
+
+<!--table  模块   table.rander-->
+<!--find.php 注意数据接口的形式-->
+<!--返回来用自定义模板  按钮 黑白名单，时间戳-->
+
+<!--给按钮添加事件，获取到id，函数放到layui的外面-->

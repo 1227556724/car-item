@@ -1,0 +1,135 @@
+.cn-content {
+    width: 100%;
+    height: auto;
+}
+
+.bit-wrap {
+    width: 1024px;
+    height: 1226px;
+    margin: auto;
+}
+
+.bit-wrap .img {
+    width: 100%;
+    height: 272px;
+    margin-top: 20px;
+}
+
+.bit-wrap .img img {
+    width: 100%;
+    height: 100%;
+}
+
+.bit-wrap .about-tt {
+    width: 100%;
+    height: 105px;
+    padding-top: 20px;
+    position: relative;
+}
+
+.bit-wrap .about-tt .line {
+    display: block;
+    width: 428px;
+    height: 1px;
+    position: absolute;
+    bottom: 0;
+    top: 18px;
+    margin: auto;
+    background-color: #D6D6D6;
+}
+
+.bit-wrap .about-tt .left {
+    left: 0;
+}
+
+.bit-wrap .about-tt .right {
+    right: 0;
+}
+
+.bit-wrap .about-tt .about-title {
+    margin: 20px 0;
+    height: 65px;
+}
+
+.bit-wrap .about-tt .hd-title {
+    margin: auto;
+    width: 128px;
+    height: 65px;
+}
+
+.bit-wrap .about-tt .hd-title .tp-title {
+    font-size: 32px;
+    color: #333;
+
+}
+
+.bit-wrap .about-tt .hd-title .hd-subtitle {
+    font-size: 14px;
+    color: #a5a5a5;
+    text-align: center;
+}
+
+.bit-wrap .text-content {
+    height: 324px;
+    margin-top: 10px;
+    padding: 20px 20px 0 20px;
+}
+
+.bit-wrap .text-content .content {
+    width: 492px;
+    height: 309px;
+    padding: 0 5px;
+    float: left;
+    box-sizing: border-box;
+    font-size: 14px;
+    color: #3e3e3e;
+    line-height: 1.8em;
+}
+
+.bit-wrap .text-content .text-two {
+    margin-top: 25px;
+    margin-bottom: 36px;
+}
+
+.bit-wrap .text-content .right-cn {
+    padding: 10px 25px 20px 25px;
+}
+
+.bit-wrap .text-content .right-cn img {
+    width: 442px;
+    height: 294px;
+}
+
+.bit-wrap .worker {
+    height: 289px;
+    margin-top: 20px;
+    padding: 20px 20px 0 20px;
+
+}
+
+.bit-wrap .worker .card {
+    padding: 0 5px;
+    width: 246px;
+    height: 289px;
+    float: left;
+    box-sizing: border-box;
+}
+
+.bit-wrap .worker .card img {
+    display: block;
+    width: 196px;
+    height: 200px;
+    margin: auto;
+    border-radius: 50%;
+}
+
+.bit-wrap .worker .card .name {
+    font-size: 26px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.bit-wrap .worker .card .name .post {
+    padding-top: 6px;
+    font-size: 14px;
+}

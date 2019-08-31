@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="__ADMIN_CSS__/layui.css">
+</head>
+<style>
+    #img1{
+        wdth:300px;
+    }
+    .box{
+        margin:20px 200px
+    }
+    .layui-form-pane .btn{
+        margin-left: 0;
+    }
+    .form-btn{
+        text-align: center;
+    }
+
+</style>
+<body>
+<div class="box">
+    <form class="layui-form layui-form-pane" action="">
+        <div class="layui-form-item">
+            <label class="layui-form-label">产品分类</label>
+            <div class="layui-input-block">
+                <select name="typeid" lay-verify="required">
+                    {volist name="product" id="vo"}
+                    <option value="{$vo['id']}">{$vo.username}</option>
+                    {/volist}
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">产品名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="goodsname" required  lay-verify="required" placeholder="请输入名称" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">产品市场价</label>
+            <div class="layui-input-block">
+                <input type="number" name="market_price" required  lay-verify="required" placeholder="请输入产品市场价" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">产品零售价</label>
+            <div class="layui-input-block">
+                <input type="number" name="price" required  lay-verify="required" placeholder="请输入产品零售价" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">产品库存</label>
+            <div class="layui-input-block">
+                <input type="number" name="stock" required  lay-verify="required" placeholder="请输入产品库存" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">上架或下架</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="uppershelf" lay-skin="switch" lay-text="上架|下架" value="1">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">详情图</label>
+            <div class="layui-upload">
+                <button type="button" class="layui-btn"  id="test1">详情图上传</button>
+                <span style="color:red;">上传图片的最佳比例为16:9，图片最大尺寸为500KB</span>
+                <input type="hidden"name="img1" id="img-one">
+                <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+                    预览图：
+                    <div class="layui-upload-list" id="demo1"></div>
+                </blockquote>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">轮播图</label>
+            <div class="layui-upload">
+                <input type="hidden" name="img2" value="">
+                <button type="button" class="layui-btn"  id="test2">轮播图上传</button>
+                <span style="color:red;">上传图片的最佳比例为16:9，图片最大尺寸为500KB</span>
+                <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+                    预览图：
+                    <div class="layui-upload-list" id="demo2"></div>
+                </blockquote>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">产品详情</label>
+            <div class="layui-input-block">
+                <textarea id="demos" name="content" placeholder="请输入产品详情" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item form-btn">
+            <div class="layui-input-block btn">
+                <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+<script src="__ADMIN_JS__/layui.js"></script>
+<script>
+    layui.use(['form','layer','upload','layedit'],function(){
+        var {form,layer,upload,$,layedit}=layui;
+        // 上传单图
+        upload.render({
+            elem:'#test1',
+            url:'/pastry/public/admin/upload/index',
+            size:500,
+            acceptMime:'image/*',
+            done:function(res){
+                $('input[type=hidden][name=img1]').val(res.src);
+                let html='<img src="'+res.src+'" style="width: 100px"/>';
+                $('#demo1').html(html)
+            }
+        })
+        // 上传多图
+        upload.render({
+            elem: '#test2'
+            ,url: '/pastry/public/admin/upload/index'
+            ,multiple: true
+            ,number:3
+            ,size:500
+            ,acceptMime:'image/*'
+            ,done: function(res){
+                if(res.code==200){
+                   $('#demo2>img').length<5 && bannerUpload(res.src)
+                }
+
+            }
+        });
+
+        function bannerUpload(src){
+            $('input[type=hidden][name=img2]').val((index,value)=>value+src+',');
+            $('<img src="" style="width: 100px;"/>').appendTo('#demo2').attr('src',src)
+        }
+        // 富文本域
+       var indexs=layedit.build('demos',{
+           tool:['image','strong','italic','underline','del','|','left','center','right','link','unlink','face'],
+            height:100,
+            uploadImage:{
+               url:'/pastry/public/admin/upload/files',
+                type:'post'
+            }
+        })
+
+        form.on('submit(formDemo)',function(data){
+            var qs=data.field;
+            qs.content=layedit.getContent(indexs);
+            qs.img2= qs.img2.slice(0,-1);
+            $.ajax({
+                url:'/pastry/public/admin/product/finds',
+                data:qs,
+                type:'post',
+                dataType:'json',
+                success:function(res){
+                    var {code,msg}=res;
+                    if(code===200){
+                        layer.msg(msg,{icon:1,time:600})
+                    }else{
+                        layer.msg(msg,{icon:2,time:600})
+                    }
+                }
+            })
+            return false;
+        })
+    })
+
+</script>
+</body>
+</html>

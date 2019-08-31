@@ -1,0 +1,140 @@
+.cn-content {
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+/* 中部内容 */
+.bit-wrap {
+    width: 1024px;
+    margin: auto;
+}
+
+.bit-wrap .img {
+    width: 100%;
+    height: 264px;
+    margin-top: 20px;
+}
+
+.bit-wrap .img img {
+    width: 100%;
+    height: 100%;
+}
+
+.bit-wrap .about-tt {
+    width: 100%;
+    height: 105px;
+    padding-top: 20px;
+    position: relative;
+}
+
+.bit-wrap .about-tt .line {
+    display: block;
+    width: 428px;
+    height: 1px;
+    position: absolute;
+    bottom: 0;
+    top: 18px;
+    margin: auto;
+    background-color: #D6D6D6;
+}
+
+.bit-wrap .about-tt .left {
+    left: 0;
+}
+
+.bit-wrap .about-tt .right {
+    right: 0;
+}
+
+.bit-wrap .about-tt .about-title {
+    margin: 20px 0;
+    height: 65px;
+}
+
+.bit-wrap .about-tt .hd-title {
+    margin: auto;
+    width: 128px;
+    height: 65px;
+}
+
+.bit-wrap .about-tt .hd-title .tp-title {
+    font-size: 32px;
+    color: #333;
+
+}
+
+.bit-wrap .about-tt .hd-title .hd-subtitle {
+    font-size: 14px;
+    color: #a5a5a5;
+    text-align: center;
+}
+
+
+.container {
+    height: 310px;
+    width: 1024px;
+    padding-top: 40px;
+    padding-bottom: 100px;
+    margin: auto;
+}
+
+.container .row {
+    padding: 0 40px;
+    height: 100%;
+}
+
+.row .row-card {
+    padding: 0 5px;
+    height: 100%;
+    float: left;
+    width: 226px;
+    margin-top: 10px;
+}
+
+.row .row-card .row-img {
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1)
+}
+
+.row .row-card img {
+    width: 100%;
+    height: 100%;
+}
+
+.row .row-card .row-text {
+    margin-top: 20px;
+    line-height: 25px;
+    font-size: 16px;
+    color: #F0443A;
+    text-align: center;
+    font-weight: bold;
+}
+
+.row .row-card .qfe-wrapper {
+    height: 18px;
+    text-align: center;
+    line-height: 18px;
+}
+
+.row .row-card .qfe-wrapper img {
+    width: 182px;
+    height: 1px;
+    display: inline-block;
+    margin: auto;
+    vertical-align: middle;
+}
+
+.row .row-card .content-tx {
+    font-size: 14px;
+    color: #8d9095;
+    line-height: 1.8em;
+}
+
+.row .row-card .content-txo {
+    padding: 0 15px;
+}
+
+/* 中部内容 */

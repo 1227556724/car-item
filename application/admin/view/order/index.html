@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="__ADMIN_CSS__/layui.css">
+    <title>Document</title>
+</head>
+<style>
+    .form-one{
+        position: absolute;
+        top:10px;
+        z-index: 9999;
+    }
+    .layui-table-cell {
+        text-align: center;
+    }
+    #addNews{
+        display: none;
+        margin-top: 30px;
+    }
+    #editNews{
+        display: none;
+        margin-top: 30px;
+    }
+
+    .addbtn{
+        position:absolute;
+        z-index:1000;
+        top:94px;
+    }
+    form{
+        margin:20px 20px;
+    }
+    .layui-form-pane .layui-form-label{
+        width: 60px;
+    }
+    .layui-form-item .layui-input-inline{
+        width: 108px;
+    }
+    .layui-form-item .sr-input{
+        width:200px
+    }
+    .layui-form-pane .serve{
+        width:90px
+    }
+</style>
+<body>
+<form action="" class="layui-form form-one" style="margin:20px  20px 0;">
+    <div class="layui-form-item layui-form-pane" style="margin-bottom:0">
+        <div class="layui-inline">
+            <label class="layui-form-label">姓名</label>
+            <div class="layui-input-inline " >
+                <input type="text" name="username" placeholder="搜索姓名" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">电话</label>
+            <div class="layui-input-inline sr-input" >
+                <input type="text" name="phone" placeholder="搜索电话" autocomplete="off" class="layui-input ">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label serve">预约服务</label>
+            <div class="layui-input-inline sr-input" >
+                <input type="text" name="serve" placeholder="搜索预约服务" autocomplete="off" class="layui-input ">
+            </div>
+        </div>
+        <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemos">搜索</button>
+    </div>
+</form>
+<div style="padding: 15px;">
+<!--    <button type="submit" class="layui-btn layui-btn-normal  addbtn"> </button>-->
+    <table id="demo" lay-filter="test" lay-data="{id: 'idTest'}"></table>
+
+</div>
+<script src="__ADMIN_JS__/layui.js"></script>
+<script type="text/html" id="titleTpl">
+    <button type="button" class="layui-btn layui-btn-danger  layui-btn-sm" onclick="del({{ d.id }},this)">删除</button>
+
+</script>
+<script>
+    //    初始化页面
+    var $,index,layer,form,table,index2;
+    layui.use(['element', 'layer', 'jquery', 'form', 'table','layedit'], function () {
+        var element = layui.element;
+        table = layui.table;
+        layer = layui.layer;
+        $ = layui.jquery;
+        form = layui.form;
+        var layedit=layui.layedit;
+        var tableIns= table.render({
+            elem: '#demo',
+            url: '/pastry/public/admin/order/query' ,//数据接口
+            page: true ,//开启分页
+            limit:5,
+            limits:[5,10,15],
+            toolbar:true,
+            cols: [[ //表头
+                {field: 'id', title: 'ID', width:80, sort: true}
+                ,{field: 'serve', title: '预约服务'}
+                ,{field: 'times', title: '预约日期'}
+                ,{field: 'username', title: '您的姓名'}
+                ,{field: 'sex', title: '您的性别'}
+                ,{field: 'phone', title: '您的电话'}
+                ,{field: 'explain', title: '发布日期'}
+                ,{title: '操作',templet:'#titleTpl'}
+            ]]
+        });
+        // 搜索表格进行重新筛选
+        form.on('submit(formDemos)',function(data){
+            var qs=data.field;
+            console.log(qs);
+            tableIns.reload({
+                where: qs
+                ,page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            });
+            return false
+        })
+        $(".addbtn").click(function () {
+            index=layer.open({
+                type:1,
+                title:'添加新闻资讯',
+                skin:'layui-layer-molv',
+                area:['500px',],
+                content:$('#addNews')
+            })
+        });
+
+        var indexs=layedit.build('demos',{
+            tool:['image','strong','italic','underline','del','|','left','center','right','link','unlink','face'],
+            height:100,
+            uploadImage:{
+                url:'/pastry/public/admin/upload/files',
+                type:'post'
+            }
+        })
+        // 修改文本域
+        var indexsEdit=layedit.build('editDemo',{
+            tool:['image','strong','italic','underline','del','|','left','center','right','link','unlink','face'],
+            uploadImage:{
+                url:'/pastry/public/admin/upload/files',
+                type:'post'
+            }
+        })
+        //添加 => 立即提交
+        form.on('submit(addDemo)',function(data){
+            var qs=data.field
+            qs.content=layedit.getContent(indexs);
+            $.ajax({
+                url:'/pastry/public/admin/news/add',
+                type:'post',
+                data:qs,
+                dataType:'json',
+                success:function(res){
+                    var {code,msg}=res;
+                    if(code===200){
+                        layer.close(index);
+                        layer.msg(msg,{icon:1,time:500});
+                        table.reload('demo',{
+                            url: '/pastry/public/admin/news/query'
+                        })
+                    }else{
+                        layer.msg(msg,{icon:2,time:600});
+                    }
+                }
+            })
+            return false;
+        });
+        // 编辑 => 立即修改
+        form.on('submit(editDemo)',function(data){
+            var qs=data.field;
+            qs.content=layedit.getContent(indexs);
+            $.ajax({
+                url:'/pastry/public/admin/news/update',
+                type:'post',
+                data:qs,
+                dataType:'json',
+                success:function(res){
+                    var {code,msg}=res;
+                    if(code===200){
+                        layer.msg(msg,{icon:1,time:500});
+                        layer.close(index2);
+                        table.reload('demo',{
+                            url: '/pastry/public/admin/news/query'
+                        })
+                    }else{
+                        layer.msg(msg,{icon:2,time:500});
+                        layer.close(index2);
+                    }
+                }
+            })
+            return false;
+        });
+        // 编辑 => 取消
+    })
+    //    删除新闻资讯
+    function del(id,obj){
+        layer.confirm('您是要删除吗？', {
+            title:"删除预约",
+            skin: 'layui-layer-molv',
+            btn: ['确定','取消'] //按钮
+        }, function(){
+            $.ajax({
+                url:'/pastry/public/admin/order/del',
+                type:'post',
+                data:{id},
+                dataType:'json',
+                success:function(res){
+                    var {code,msg}=res;
+                    if(code===200){
+                        layer.msg(msg,{icon:1,time:500});
+                        table.reload('demo',{
+                            url: '/pastry/public/admin/order/query'
+                        })
+                    }else{
+                        layer.msg(msg,{icon:2,time:600});
+                    }
+                }
+            })
+        }, function(){
+            layer.close();
+        });
+    }
+    // 修改
+    function edit(id){
+        index2=layer.open({
+            type:1,
+            title:'修改预约',
+            skin:'layui-layer-molv',
+            area:['500px','450px'],
+            content:$('#editNews')
+        });
+        $.ajax({
+            url:'/pastry/public/admin/news/edit',
+            type:'post',
+            data:{id},
+            dataType:'json',
+            success:function(res){
+                var data=res.data;
+                if(res.code===200){
+                    $("#newsId").val(data.id);
+                    $("#title").val(data.title);
+                    $("#editDemo").html(data.content);
+                }
+            }
+        })
+    }
+</script>
+<!--添加信息表单-->
+<!--添加-->
+</body>
+</html>

@@ -1,0 +1,114 @@
+{include file='public/header' title='汽车维修美容 | 关于我们'}
+<link rel="stylesheet" href="__INDEX_CSS__/about.css">
+    <!-- 中部 -->
+    <div class="cn-content">
+        <div class="bit-wrap">
+            <div class="img clearfix">
+                <img src="__INDEX_IMG__/gy1.jpg" alt="">
+            </div>
+            <div class="about-tt clearfix">
+                <span class="line left"></span>
+                <div class="about-title">
+                    <div class="hd-title">
+                        <div class="tp-title">关于我们</div>
+                        <div class="hd-subtitle">About Us</div>
+                    </div>
+
+                </div>
+                <span class="line right"></span>
+            </div>
+            <div class="text-content">
+                <div class="content left-cn">
+                    {$about['ades']}
+<!--                    <div class="text-one">汽车有限公司成立于XXX年XX月XX日，是本地区唯一的授权销售服务中心和特约售后服务中心。主要从事多种品牌的整车销售、-->
+<!--                        售后服务、配件供应及信息反馈业务。公司秉承 “尊荣无限-->
+<!--                        至上体验”的服务理念，培养更主动贴心的服务意识,追求更周到便捷的服务水准，让每一位车主，都体验到管家般的细致专业，享受到真正待为贵宾般的尊崇体验。</div>-->
+<!--                    <div class="text-two">-->
+<!--                        除了为车主提供贴心专业的购车及售后服务，公司还经常组织车主活动，为车主朋友提供一个轻松、愉快的交流平台，让每一位车主都能大家庭里感受到“车生活”更多的乐趣。经过两年的时间，公司已经发展，拥有一流的硬件设施、科学的管理、精湛的技术、诚心的服务品质和积极进取的优秀团队。-->
+<!--                    </div>-->
+<!--                    <div class="text-three">真诚期望XXX能成为您的爱车之家！</div>-->
+                </div>
+                <div class="content right-cn">
+                    <img src="{$about['aimg']}" alt="">
+                </div>
+            </div>
+            <div class="about-tt clearfix">
+                <span class="line left"></span>
+                <div class="about-title">
+                    <div class="hd-title">
+                        <div class="tp-title">维修师傅</div>
+                        <div class="hd-subtitle">Master Team</div>
+                    </div>
+                </div>
+                <span class="line right"></span>
+            </div>
+            <div class="worker">
+                {volist name="team" id="vo"}
+                <div class="card">
+                    <img src="{$vo['img']}" alt="">
+                    <div class="name"> <strong>{$vo['teamname']}</strong>
+                        <div class="post color">{$vo['positions']}</div>
+                    </div>
+                </div>
+                {/volist}
+            </div>
+        </div>
+    </div>
+    <!-- 中部 -->
+    <div class="footer clearfix">
+        <div class="wf-wrap">
+            <div class="clearfix">
+                <div class="wrap-content">
+                    <p class="color"> <strong>一店地址</strong> </p>
+                    <p class="text-two">门店地址：上海市松江区佘山林荫大道18号 </p>
+                    <p>预约电话：<a href="" class="color">400-562-6654 </a></p>
+                    <p class="text-two"><strong class="bold">营业时间：</strong></p>
+                    <p class="sm-font">周一 ~周五：上午9:30-下午8:00</p>
+                    <p class="sm-font">周六、周日：上午10:00-下午9:00</p>
+                </div>
+                <div class="wrap-content">
+                    <p class="color"> <strong>二店地址</strong> </p>
+                    <p class="text-two">门店地址：上海市松江区佘山林荫大道18号 </p>
+                    <p>预约电话：<a href="" class="color">400-562-6654 </a></p>
+                    <p class="text-two"><strong class="bold">营业时间：</strong></p>
+                    <p class="sm-font">周一 ~周五：上午9:30-下午8:00</p>
+                    <p class="sm-font">周六、周日：上午10:00-下午9:00</p>
+                </div>
+                <div class="wrap-content">
+                    <p class="color"> <strong>三店地址</strong> </p>
+                    <p class="text-two">门店地址：上海市松江区佘山林荫大道18号 </p>
+                    <p>预约电话：<a href="" class="color">400-562-6654 </a></p>
+                    <p class="text-two"><strong class="bold">营业时间：</strong></p>
+                    <p class="sm-font">周一 ~周五：上午9:30-下午8:00</p>
+                    <p class="sm-font">周六、周日：上午10:00-下午9:00</p>
+                </div>
+            </div>
+            <div class="column-inner clearfix">
+                <ul>
+                    <li>
+                        <div class="img img1"></div>
+                    </li>
+                    <li>
+                        <div class="img img2"></div>
+                    </li>
+                    <li>
+                        <div class="img img3"></div>
+                    </li>
+                    <li>
+                        <div class="img img4"></div>
+                    </li>
+                    <li>
+                        <div class="img img5"></div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- 底部 -->
+    <div class="return">
+        <i class="iconfont icon-iconfonticontrianglecopy"></i>
+    </div>
+    <script src="__INDEX_JS__/return.js"></script>
+</body>
+
+</html>

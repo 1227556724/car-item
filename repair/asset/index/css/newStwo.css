@@ -1,0 +1,156 @@
+.cn-content {
+    width: 100%;
+    height: auto;
+    margin: 40px 0;
+}
+
+/* 中部内容 */
+.bit-wrap {
+    width: 1024px;
+    margin: auto;
+}
+
+.bit-wrap .img {
+    width: 100%;
+    height: 204px;
+    margin-top: 20px;
+}
+
+.bit-wrap .img img {
+    width: 100%;
+    height: 100%;
+}
+
+.bit-wrap .about-tt {
+    width: 100%;
+    height: 105px;
+    padding-top: 20px;
+    position: relative;
+}
+
+.bit-wrap .about-tt .line {
+    display: block;
+    width: 428px;
+    height: 1px;
+    position: absolute;
+    bottom: 0;
+    top: 18px;
+    margin: auto;
+    background-color: #D6D6D6;
+}
+
+.bit-wrap .about-tt .left {
+    left: 0;
+}
+
+.bit-wrap .about-tt .right {
+    right: 0;
+}
+
+.bit-wrap .about-tt .about-title {
+    margin: 20px 0;
+    height: 65px;
+}
+
+.bit-wrap .about-tt .hd-title {
+    margin: auto;
+    width: 128px;
+    height: 65px;
+}
+
+.bit-wrap .about-tt .hd-title .tp-title {
+    font-size: 32px;
+    color: #333;
+
+}
+
+.bit-wrap .about-tt .hd-title .hd-subtitle {
+    font-size: 14px;
+    color: #a5a5a5;
+    text-align: center;
+}
+
+/* 中间内容 */
+.big-content {
+    width: 100%;
+}
+
+.big-content .bit-content {
+    padding: 20px;
+    width: 1024px;
+    margin: auto;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.big-content .bit-content .title {
+    margin: 20px 0;
+    font-size: 32px;
+    font-weight: normal;
+    text-align: center;
+}
+
+.big-content .bit-content .time {
+    color: #878787;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.big-content .bit-content .tx-content {
+    color: #3e3e3e;
+    margin-bottom: 25px;
+    line-height: 1.8em;
+}
+
+.big-content .bit-content .bt-skip {
+    padding: 40px 0;
+    font-size: 14px;
+    line-height: 43px;
+    height: 43px;
+}
+
+.big-content .bit-content .bt-skip .left-text {
+    float: left;
+}
+
+.big-content .bit-content .bt-skip .left-text a {
+    display: block;
+    color: #f0443a;
+}
+
+.big-content .bit-content .bt-skip .right-text {
+    float: right;
+}
+
+.big-content .bit-content .bt-skip .right-text a {
+    color: #f0443a;
+    display: block;
+}
+
+.big-content .bit-content .bt-skip .left-text:hover a {
+    color: #3e3e3e;
+}
+
+.big-content .bit-content .bt-skip .right-text:hover a {
+    color: #3e3e3e;
+}
+
+/* 按钮 */
+.backbtn {
+    width: 974px;
+    height: 49px;
+    margin: 40px 0;
+    text-align: center;
+}
+
+.backbtn button {
+    margin: auto;
+    padding: 13px 19px;
+    border: 2px solid #000;
+    font-size: 14px;
+    color: #000;
+    background: #fff;
+    transition: 0.2s linear;
+    outline: none;
+    cursor: pointer;
+}

@@ -1,0 +1,78 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/asset/admin/layui/css/layui.css">
+    <title>后台登录页面</title>
+</head>
+<style>
+
+    .box{
+        width:400px;
+        height:auto;
+        position:absolute;
+        left:50%;
+        top:50%;
+        transform: translate(-50%,-50%);
+    }
+    h2{
+        line-height:3;
+        text-align: center;
+    }
+</style>
+<body>
+    <div class="box">
+        <h2>XXX后台管理</h2>
+        <form action="" class="layui-form">
+            <div class="layui-form-item">
+                <label class="layui-form-label">用户名</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="username" required  lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">密码</label>
+                <div class="layui-input-inline">
+                    <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script src="/asset/admin/layui/layui.js"></script>
+    <script>
+        var $,index,layer,form,table,index2;
+        layui.use(['jquery', 'form', 'table'], function () {
+            table = layui.table;
+            $ = layui.jquery;
+            form = layui.form;
+            layer=layui.layer;
+            form.on('submit(formDemo)',function(data){
+                var qs=data.field;
+                $.ajax({
+                    url:'action.php',
+                    type:'post',
+                    data:qs,
+                    dataType:'json',
+                    success:function(res){
+                        if(res.code==200){
+                            location.href='../admin/index.php'
+                       }else{
+                           layer.msg(res.msg,{icon:2})
+                       }
+                    }
+                })
+                return false;
+            })
+        })
+    </script>
+</body>
+</html>

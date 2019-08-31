@@ -1,0 +1,76 @@
+.bit-banner {
+    width: 100%;
+    height: 270px;
+    margin-bottom: 20px;
+}
+
+.bit-banner img {
+    width: 100%;
+    height: 100%;
+}
+
+/* 头部大图片 */
+/* 中间内容 */
+.big-content {
+    width: 100%;
+    height: 591px;
+}
+
+.big-content .bit-content {
+    padding: 20px;
+    width: 1024px;
+    margin: auto;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.big-content .bit-content .title {
+    margin: 20px 0;
+    font-size: 32px;
+    font-weight: normal;
+    text-align: center;
+}
+
+.big-content .bit-content .time {
+    color: #878787;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.big-content .bit-content .tx-content {
+    color: #3e3e3e;
+    margin-bottom: 25px;
+    line-height: 1.8em;
+}
+
+.big-content .bit-content .bt-skip {
+    padding: 40px 0;
+    font-size: 14px;
+    line-height: 43px;
+}
+
+.big-content .bit-content .bt-skip .left-text {
+    float: left;
+}
+
+.big-content .bit-content .bt-skip .left-text a {
+    display: block;
+    color: #f0443a;
+}
+
+.big-content .bit-content .bt-skip .right-text {
+    float: right;
+}
+
+.big-content .bit-content .bt-skip .right-text a {
+    color: #f0443a;
+    display: block;
+}
+
+.big-content .bit-content .bt-skip .left-text:hover a {
+    color: #3e3e3e;
+}
+
+.big-content .bit-content .bt-skip .right-text:hover a {
+    color: #3e3e3e;
+}

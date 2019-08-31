@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="__ADMIN_CSS__/layui.css">
+    <script src="__ADMIN_JS__/layui.js"></script>
+    <script src="__ADMIN_JS__/echarts.js"></script>
+</head>
+<style>
+    ul,li{
+        margin: 0;
+        padding:0;
+        list-style:none;
+    }
+    .box{
+        padding:20px;
+        box-sizing:border-box;
+        height:400px;
+        position: absolute;
+        top:0;
+        left:0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+    }
+    .box>li{
+        float: left;
+        width:500px;
+        height:400px;
+    }
+    .box>li:last-child{
+        float: right;
+    }
+</style>
+<body>
+    <div>
+        <ul class="box" id="aaa">
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+    <script>
+        layui.use(['element'],function(){
+            var {$}=layui;
+            var line=document.querySelectorAll('.box > li');
+            var lines=echarts.init(line[0]);
+            showLoading:true;
+            $.ajax({
+                type:'get',
+                url:'/pastry/public/admin/echarts/query',
+                dataType:'json',
+                success:function(res){
+                    var {categroy,catenum}=res;
+                    // hideLoading:true;
+                    optionLine={
+                        title: {
+                            text: '产品分类及数量'
+                        },
+                        tooltip: {},
+                        legend: {
+                            data:['数量']
+                        },
+                        xAxis: {
+                            data: categroy,
+                        },
+                            yAxis: {},
+                    series: [{
+                        name: '销量',
+                        type: 'bar',
+                        data: catenum,
+                        }]
+                    };
+                    lines.setOption(optionLine);
+                }
+            })
+            var pie=echarts.init(line[1]);
+            $.ajax({
+                url:'/pastry/public/admin/echarts/pie',
+                dataType:'json',
+                success:function(res){
+                    var {data,cate}=res;
+                    optionPie={
+                        tooltip: {
+                            trigger: 'item',
+                            formatter: "{a} <br/>{b}: {c} ({d}%)"
+                        },
+                        legend: {
+                            orient: 'vertical',
+                            x: 'left',
+                            data:cate
+                        },
+                        series: [
+                            {
+                                name:'访问来源',
+                                type:'pie',
+                                radius: ['50%', '70%'],
+                                avoidLabelOverlap: false,
+                                label: {
+                                    normal: {
+                                        show: false,
+                                        position: 'center'
+                                    },
+                                    emphasis: {
+                                        show: true,
+                                        textStyle: {
+                                            fontSize: '30',
+                                            fontWeight: 'bold'
+                                        }
+                                    }
+                                },
+                                labelLine: {
+                                    normal: {
+                                        show: false
+                                    }
+                                },
+                                data:data
+                            }
+                        ]
+                    }
+                    pie.setOption(optionPie);
+                }
+            })
+        })
+
+    </script>
+</body>
+</html>

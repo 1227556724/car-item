@@ -1,0 +1,217 @@
+{include file='public/header' title='汽车维修美容 | 壳牌 黄喜力HX5矿物油系列'}
+
+<link rel="stylesheet" href="__INDEX_CSS__/detalis.css">
+    <!-- 头部大图片 -->
+    <div class="bit-banner">
+        <img src="__INDEX_IMG__/xq.jpg" alt="">
+    </div>
+    <!-- 头部大图片 -->
+    <div class="bit-content ">
+        <div class="bl-title">
+            <div class="title">{$goods['goodsname']}</div>
+        </div>
+        <div class="dt-shop clearfix">
+            <div class="big-card">
+                <div class="card-shop shop-banner">
+                    <div class="big-banner">
+                        <ul class="banner-box">
+                            {volist name="goods['banner']" id="vo"}
+                            <li class="banner">
+                                <img src="{$vo}" alt="">
+                            </li>
+                            {/volist}
+                        </ul>
+                        <div class="next flex">
+                        </div>
+                        <div class="next flexs">
+                        </div>
+                        <ul class="bn-round">
+                            {for start=0 end="count($goods['banner'])"}
+                            <li class="round"></li>
+                            {/for}
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-shop shop-banner">
+                    <div class="content">
+                        <div class="price">市场价：￥{$goods['market_price']}</div>
+                        <span>零售价：</span>
+                        <strong class="textone">￥{$goods['price']}</strong>
+                        <div class="split"></div>
+                        <div>库存状况：{$goods['stock']}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="present">商品介绍</div>
+            <div class="pt-content">
+                    {$goods['content']}
+            </div>
+        </div>
+    </div>
+    <!-- 底部 -->
+    <div class="footer clearfix">
+        <div class="wf-wrap">
+            <div class="clearfix">
+                <div class="wrap-content">
+                    <p class="color"> <strong>一店地址</strong> </p>
+                    <p class="text-two">门店地址：上海市松江区佘山林荫大道18号 </p>
+                    <p>预约电话：<a href="" class="color">400-562-6654 </a></p>
+                    <p class="text-two"><strong class="bold">营业时间：</strong></p>
+                    <p class="sm-font">周一 ~周五：上午9:30-下午8:00</p>
+                    <p class="sm-font">周六、周日：上午10:00-下午9:00</p>
+                </div>
+                <div class="wrap-content">
+                    <p class="color"> <strong>二店地址</strong> </p>
+                    <p class="text-two">门店地址：上海市松江区佘山林荫大道18号 </p>
+                    <p>预约电话：<a href="" class="color">400-562-6654 </a></p>
+                    <p class="text-two"><strong class="bold">营业时间：</strong></p>
+                    <p class="sm-font">周一 ~周五：上午9:30-下午8:00</p>
+                    <p class="sm-font">周六、周日：上午10:00-下午9:00</p>
+                </div>
+                <div class="wrap-content">
+                    <p class="color"> <strong>三店地址</strong> </p>
+                    <p class="text-two">门店地址：上海市松江区佘山林荫大道18号 </p>
+                    <p>预约电话：<a href="" class="color">400-562-6654 </a></p>
+                    <p class="text-two"><strong class="bold">营业时间：</strong></p>
+                    <p class="sm-font">周一 ~周五：上午9:30-下午8:00</p>
+                    <p class="sm-font">周六、周日：上午10:00-下午9:00</p>
+                </div>
+            </div>
+            <div class="column-inner clearfix">
+                <ul>
+                    <li>
+                        <div class="img img1"></div>
+                    </li>
+                    <li>
+                        <div class="img img2"></div>
+                    </li>
+                    <li>
+                        <div class="img img3"></div>
+                    </li>
+                    <li>
+                        <div class="img img4"></div>
+                    </li>
+                    <li>
+                        <div class="img img5"></div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="return">
+        <i class="iconfont icon-iconfonticontrianglecopy"></i>
+    </div>
+    <!-- 底部 -->
+    <script src="__INDEX_JS__/animate.js"></script>
+    <script src="__INDEX_JS__/return.js"></script>
+    <script>
+        // 获取操作元素
+        let bigBox = document.querySelector(".big-banner");
+        let banner = document.querySelectorAll(".banner");
+        let bigNext = document.querySelectorAll(".next");
+        let round = document.querySelectorAll(".round");
+        // 默认显示第一张图片
+        banner[0].style.left = 0;
+        // 默认改变第一个轮播点的颜色
+        round[0].classList.add("hot")
+        // 通过双下标实现循环动态图
+        let index = 0; //定义第一个图下标
+        let next = 0; //定义下一张图下标
+        flag = true;
+        // 设置一个开关默认为true
+        // 点击右箭头跳转
+        bigNext[1].onclick = () => {
+            move()
+        }
+        // 分装函数给右按钮以及轮播点使用
+        function move() {
+            if (!flag) {
+                return
+            }
+            flag = false;
+            // 第二张图片下标增加
+            next++
+            // 判断当大于轮播的长度时等于第0图片
+            if (next > banner.length - 1) {
+                next = 0
+            }
+            // 默认第一张图和第二张图的初始位置
+            banner[index].style.left = 0;
+            banner[next].style.left = 300 + "px";
+            // 第一张图移动后的位置
+            animate(banner[index], {
+                left: -300
+            });
+            // 第二张图移动后的位置
+            animate(banner[next], {
+                left: 0
+            }, () => {
+                flag = true;
+                round.forEach((v) => {
+                    v.classList.remove("hot")
+                })
+                round[next].classList.add("hot")
+            });
+            // 移动后将next 的值给index
+            index = next
+        }
+        // 点击左箭头跳转
+        bigNext[0].onclick = () => {
+            moves()
+        }
+        // 分装函数给左按钮以及轮播点使用
+        function moves() {
+            if (!flag) {
+                return
+            }
+            flag = false;
+            next--
+            if (next < 0) {
+                next = banner.length - 1
+            }
+            banner[index].style.left = 0;
+            banner[next].style.left = -300 + "px"
+            animate(banner[index], {
+                left: 300
+            });
+            animate(banner[next], {
+                left: 0
+            }, () => {
+                flag = true;
+                round.forEach((v) => {
+                    v.classList.remove("hot")
+                })
+                round[next].classList.add("hot")
+            });
+            index = next
+        }
+        // 点击轮播点跳转轮播图
+        round.forEach((v, i) => {
+            v.onclick = () => {
+
+                if (i > index) {
+                    move()
+                }
+                if (i < index) {
+                    moves()
+                }
+
+            }
+        })
+        // 显示隐藏左右按钮
+        // 鼠标移入时显示
+        bigBox.onmouseover = () => {
+            bigNext.forEach((v) => {
+                v.style.opacity = 1;
+            })
+        }
+        // 鼠标移出时隐藏
+        bigBox.onmouseout = () => {
+            bigNext.forEach((v) => {
+                v.style.opacity = 0;
+            })
+        }
+    </script>
+</body>
+
+</html>
